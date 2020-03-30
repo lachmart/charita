@@ -1,0 +1,74 @@
+<h2>Faktura č. {$invoice->invoiceId} vystavena dne {$invoice->created|date:'%d. %m. %Y'}</h2>
+<table style="width:100%;" border="1">
+  <tr>
+    <td>
+      <table id="udaje_charity" style="width:100%">
+        <tr>
+          <td>
+            Společnost:
+          </td>
+          <td>
+            Charita
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Adresa:
+          </td>
+          <td>
+            Charita
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td>
+      <table id="udaje_zakaznika" style="width:100%">
+        <tr>
+          <th>Zákazník</th>
+        </tr>
+        <tr>
+          <td>{$customer->billingFullName}</td>
+        </tr>
+        <tr>
+          <td>{$customer->billingStreet}</td>
+        </tr>
+        <tr>
+          <td>
+            {$customer->billingZip}  {$customer->billingCity}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table >
+<br>
+<table id="objednavky" style="width:100%" >
+  <tr>
+    <th>
+      předmět
+    </th>
+    <th>
+      cena
+    </th>
+  </tr>
+  <tr><td><br></td></tr>
+{foreach $orders as $order}
+<tr>
+  <td>
+    Objednávka č. {$order->orderId} ze dne {$order->created|date:'%d. %m. %Y'}
+  </td>
+  <td align="right">
+    {$order->price} kč
+  </td>
+</tr>
+{/foreach}
+<tr><td><br></td></tr>
+<tr>
+  <td>
+    <b>Celková částka</b>
+  </td>
+  <td align="right">
+    <b>{$invoice->total} kč</b>
+  </td>
+</tr>
+</table>

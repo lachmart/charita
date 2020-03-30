@@ -1,0 +1,27 @@
+parameters:
+
+
+application:
+	errorPresenter: Err:Error
+	mapping:
+		*: *Module\*Presenter
+
+
+session:
+	expiration: 14 days
+
+
+services:
+	- App\Model\UserManager
+	- App\Model\Repository\UserRepository
+	- App\Model\Repository\CustomerRepository
+	- App\Components\ICustomerControlFactory
+	- App\Forms\CustomerForm
+	- App\Model\Repository\OrderRepository
+	- App\Components\IOrderControlFactory
+	- App\Forms\OrderForm
+	- App\Model\Repository\InvoiceRepository
+	- App\Components\IInvoiceControlFactory
+	- App\Forms\InvoiceForm
+	router: App\RouterFactory::createRouter
+	authorizator: App\Model\Security\PermissionFactory::create()

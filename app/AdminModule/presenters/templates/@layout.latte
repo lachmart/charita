@@ -1,0 +1,96 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{ifset title}{include title|striptags}{/ifset} File</title>
+
+    <link rel="shortcut icon" href="{$basePath}/favicon.ico">
+	<link href="{$basePath}/css/bootstrap.min.css" rel="stylesheet"> 
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    
+    {block head}{/block}
+
+    <link rel="stylesheet" href="{$basePath}/css/styles.css">
+
+</head>
+
+<body>
+
+<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+
+
+<div id="administration" class="container-fluid">
+
+
+	{if $user->isLoggedIn()}
+
+
+	    <div class="row pt-5 mb-3 pb-2">
+
+	        <div class="col-8 mx-auto">
+	            <div class="border-bottom">
+	                <div class="row">
+	                    <div class="col-md-8">
+	                      <div class="page-header mb-3">
+	                        <h1>file <small> / správa webu</small></h1>
+
+	                        <p class="h6"><a n:href="Homepage:default">Administrace</a>{block breadcrumbs}{/block}</p>
+
+	                      </div>
+	                    </div>
+	                    <div class="col-md-4 pt-3 text-right">
+	                      {if $user->loggedIn}
+	                          <a class="btn btn-outline-primary" n:href="Sign:out">Odhlásit {ifset username}{include username}{/ifset}<i class="fas fa-sign-out-alt"></i></a>
+	                      {/if}
+	                    </div>
+	                </div>    
+	            </div>    
+	        </div>
+
+	    </div>
+
+	{/if}
+
+
+	{include content}
+
+
+
+	<div id="footer" class="row pt-5 pl-3">
+		<div class="col-8 mx-auto">
+			<footer class="footer">
+				<p>© TechTailors s.r.o.</p>
+			</footer>
+		</div>
+	</div>
+
+</div>
+
+	{block scripts}
+		<script src="{$basePath}/js/jquery.min.js"></script>
+		<script src="{$basePath}/js/bootstrap.min.js"></script>
+		<script src="{$basePath}/js/nette.ajax.js"></script>
+		<script src="{$basePath}/js/netteForms.min.js"></script>
+		<script src="{$basePath}/js/popper.min.js"></script>
+		<script src="{$basePath}/js/scripts.js"></script>
+	{/block}
+
+	<script>
+
+	    var Nette = {
+	        initForm: function () {}
+	    };
+
+	    $(function () {
+	        $.nette.init();
+	    });
+
+	</script>
+
+
+</body>
+</html>

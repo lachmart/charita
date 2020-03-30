@@ -1,0 +1,58 @@
+{block invoiceForm}
+
+	{form invoiceForm}
+
+		<!-- Jednoduché vykreslení chyb -->
+		<div  n:if="$form->hasErrors()">
+		    <div class="alert alert-danger" n:foreach="$form->errors as $error">{$error}</div>
+		</div>
+
+		<div class="card mb-4">
+		  <div class="card-header">
+			Údaje o zákazníkovi:
+			</div>
+			<div style="display:none;">
+				{label	fk_customer/}
+				{input	fk_customer}
+			</div>
+		  <div class="card-body">
+		  	<div class="row mb-4">
+					<div class="col-sm-6">
+											{label invoiceId/}
+											{input invoiceId}
+						</div>
+						<div class="col-sm-6">
+	                    {label	created/}
+	                    {input	created}
+				  	</div>
+		  	</div>
+				<div class="row mb-4">
+					<div class="col-sm-6">
+											{label total/}
+											{input total}
+						</div>
+						<div class="col-sm-6">
+											{label customerName/}
+											{input customerName}
+
+				  	</div>
+		  	</div>
+
+		</div>
+
+
+
+		<div class="row mb-5">
+			<div class="col-sm-3 offset-sm-8">
+
+				<a href="{link Invoice:Print}" class="btn btn-primary" role="button">Uložit Pdf</a>
+				<a href="{link Invoice:}" class="btn btn-secondary float-right" role="button">Zrušit</a>
+
+			</div>
+		</div>
+
+	{/form}
+
+
+
+{/block}
