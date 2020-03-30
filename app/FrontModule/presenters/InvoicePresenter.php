@@ -189,13 +189,14 @@ class InvoicePresenter extends BasePresenter
       $template->customer = $this->customerRepository->getCustomer($invoice->fk_customer);
       $template->orders = $this->orderRepository->getAllInvoice($invoiceId);
 
-      $template->formatedId = sprintf("%03d", $invoice->fk_customer);
+      $formatedId = sprintf("%03d", $invoice->fk_customer);
+      $template->formatedId = $formatedId;
       $template->setFile(__DIR__ . '/templates/Invoice/pdf.latte');
 
       $pdf = new mPDF();
       $pdf->WriteHTML($template);
-      //$pdf->Output("NES_faktura_".$invoiceId .".pdf", \Mpdf\Output\Destination::DOWNLOAD);
-$pdf->Output();
+      $pdf->Output("NES_faktura_1712".$formatedId.date('W',$invoice->created->getTimestamp()).".pdf", \Mpdf\Output\Destination::DOWNLOAD);
+      //$pdf->Output();
 
       $this->redirect('Invoice:');
     }
