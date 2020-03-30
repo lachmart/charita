@@ -65,6 +65,7 @@ class CustomerControl extends Control
 
         $grid->setTranslator($this->translator);
         //$grid->addFilterMultiSelect('buildingName', 'buildingName', ['První budova', 'Druhá']);
+        $grid->setDefaultSort(['customerId' => 'DESC']);
         $grid->setStrictSessionFilterValues(FALSE);
         return $grid;
     }

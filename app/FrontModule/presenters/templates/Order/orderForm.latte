@@ -7,7 +7,13 @@
 		    <div class="alert alert-danger" n:foreach="$form->errors as $error">{$error}</div>
 		</div>
 
+
+
 		<div class="card mb-4">
+			<div style="display:none;">
+				{label	fk_customer/}
+				{input	fk_customer}
+			</div>
 		  <div class="card-header">
 			Údaje o zákazníkovi:
 			</div>
@@ -22,8 +28,9 @@
 					<div class="col-sm-12">
 											{label list/}
 											{input list}
-											{label fk_customer/}
-											{input fk_customer}
+											{label remark/}
+											{input remark}
+
 						</div>
 				</div>
 

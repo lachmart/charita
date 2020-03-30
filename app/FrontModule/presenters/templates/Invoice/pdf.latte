@@ -1,14 +1,30 @@
-<h2>Faktura č. {$invoice->invoiceId} vystavena dne {$invoice->created|date:'%d. %m. %Y'}</h2>
-<table style="width:100%;" border="1">
-  <tr>
-    <td>
-      <table id="udaje_charity" style="width:100%">
+<h2>Faktura č. 1712 {$formatedId} {($invoice->created|date:'%W')+1} vystavena dne {$invoice->created|date:'%d. %m. %Y'}</h2>
+<hr>
+
+      <table id="udaje_charity" style="width:100%" >
+        <tr border="1">
+          <th colspan="2" >
+            Společnost
+          </th>
+          <th >
+
+          </th>
+          <th >
+            Zákazník
+          </th>
+        </tr>
         <tr>
           <td>
-            Společnost:
+            Název:
           </td>
           <td>
-            Charita
+            Charita Olomouc
+          </td>
+          <td>
+
+          </td>
+          <td >
+            {$customer->billingFullName}
           </td>
         </tr>
         <tr>
@@ -16,39 +32,40 @@
             Adresa:
           </td>
           <td>
-            Charita
+            Wurmova 5, Olomouc, 779 00
           </td>
-        </tr>
-      </table>
-    </td>
-    <td>
-      <table id="udaje_zakaznika" style="width:100%">
-        <tr>
-          <th>Zákazník</th>
-        </tr>
-        <tr>
-          <td>{$customer->billingFullName}</td>
-        </tr>
-        <tr>
-          <td>{$customer->billingStreet}</td>
+          <td>
+          </td>
+          <td align="right">
+            {$customer->billingStreet}
+          </td>
         </tr>
         <tr>
           <td>
-            {$customer->billingZip}  {$customer->billingCity}
+            Ič:
+          </td>
+          <td>
+            44936427
+          </td>
+          <td>
+
+          </td>
+          <td align="right">
+              {$customer->billingZip}  {$customer->billingCity}
           </td>
         </tr>
       </table>
-    </td>
-  </tr>
-</table >
-<br>
-<table id="objednavky" style="width:100%" >
+
+
+
+<hr>
+<table id="objednavky" style="width:100%;" >
   <tr>
     <th>
-      předmět
+      Položky
     </th>
     <th>
-      cena
+      Cena
     </th>
   </tr>
   <tr><td><br></td></tr>

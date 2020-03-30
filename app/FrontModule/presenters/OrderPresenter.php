@@ -73,7 +73,7 @@ class OrderPresenter extends BasePresenter
        // $this->template->orderAttributes = $this->orderRepository->getAllOrderAttributesForOrderType($orderTypeId);
         //$this->customerId = $customerId;
         $customerName = $this->customerRepository->getCustomer($customerId)->billingFullName;
-        $this['orderForm']->setDefaults(['fk_customer'=>$customerId,'customerName' => $customerName]);
+        $this['orderForm']->setDefaults(['fk_customer'=>$customerId,'customerName' => $customerName,"created" => date('Y-m-d', time()) ]);
     }
 
 
@@ -84,9 +84,9 @@ class OrderPresenter extends BasePresenter
           $this->orderId = $orderId;
           $this->template->order = $order;
           $orderBasicAttributes = $order->toArray();
-          $invoiceBasicAttributes["customerName"] = $this->customerRepository->getName($invoice->fk_customer);
-        
-        //  $orderBasicAttributes["customerName"] = $order->customer->billingFullName;
+          $orderBasicAttributes["customerName"] = $this->customerRepository->getName($order->fk_customer);
+          $orderBasicAttributes["created"] = date('Y-m-d',$orderBasicAttributes["created"]->getTimestamp());
+          //$orderBasicAttributes["customerName"] = $order->customer->billingFullName;
 
           $this['orderForm']->setDefaults($orderBasicAttributes);
         }
@@ -100,10 +100,10 @@ class OrderPresenter extends BasePresenter
     public function handleCreateOrder()
     {
 
-        if ($this->isAjax()) {
-            $this->payload->isModal = TRUE;
-            $this->redrawControl("modal");
-        }
+        // if ($this->isAjax()) {
+        //     $this->payload->isModal = TRUE;
+        //     $this->redrawControl("modal");
+        // }
     }
 
     protected function createComponentOrderForm()

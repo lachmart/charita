@@ -44,9 +44,10 @@ class OrderForm
 
         $form->addGroup('');
         $form->addText('orderId', 'Id')->setAttribute('readonly','readonly');
-        $form->addText('created', 'Vytvořeno')->setAttribute('readonly','readonly');
+        $form->addText('created', 'Vytvořeno')->setType('date');
         $form->addText('price', 'cena');
         $form->addTextArea('list', 'Nákupní seznam')->setHtmlAttribute('style', 'height:300px;')->setHtmlAttribute("autofocus");
+        $form->addText('remark', 'Poznámka');
         $form->addText('price_timestamp', 'Cena zadána')->setAttribute('readonly','readonly');
         $form->addText('fk_customer', 'Zákazník')->setAttribute('readonly','readonly');
         $form->addText('fk_invoice', 'Faktura')->setAttribute('readonly','readonly');
@@ -118,7 +119,7 @@ class OrderForm
             $form->addError('Vyfakturovanou objednávku není možné měnit.');
       }
       else {
-          $data['created']=date('Y-m-d H:i:s',time());
+          //$data['created']=date('Y-m-d H:i:s',time());
           $data['created_by']=$this->user->getId();
           if($values['price']!= 0){
             $data['price_timestamp']=date('Y-m-d H:i:s',time());
