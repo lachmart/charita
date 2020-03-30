@@ -1,0 +1,59 @@
+{* Device:detail *}
+
+{block content}
+
+
+<div id="banner" class="mb-4">
+	<h3 n:block=title>Detail faktury</h3>
+</div>
+
+{include 'invoiceForm.latte'}
+
+<ul class="nav nav-tabs" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" href="#orders" role="tab" data-toggle="tab">Objednávky</a>
+  </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+	<div role="tabpanel" class="tab-pane in active" id="orders">
+	{control orderControl}
+	</div>
+	</div>
+
+
+{/block}
+
+{define modalTitle}
+	Vložení záznamu
+{/define}
+
+
+
+{block scripts}
+
+	<script>
+	  $.nette.ext("modals", {
+	          success: function(payload) {
+	              if (payload.redirect) {
+	                  $(".modal-ajax").modal("hide");
+	              } else if(payload.isModal) {
+	                  $('.modal-ajax').modal('show');
+	              }
+	          }
+	      });
+
+	  $.nette.ext("ajaxRedirect", {
+	      success: function (payload) {
+	          if (payload.redirect) {
+	              $.nette.ajax(payload.redirect);
+	          }
+	      }
+	  });
+	</script>
+
+
+
+
+{/block}
