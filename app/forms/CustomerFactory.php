@@ -40,7 +40,7 @@ class CustomerForm
 
         $form->addGroup('');
         $form->addText('customerId', 'Id')->setAttribute('readonly','readonly');
-        $form->addText('billingFullName', 'Jméno')->setRequired('Zadejte prosím jméno');
+        $form->addText('billingFullName', 'Jméno, Příjmení')->setRequired('Zadejte prosím jméno');
         $form->addText('billingStreet', 'Ulice, číslo')->setRequired('Zadejte ulici (je potřeba kvůli faktuře)');
         $form->addText('billingCity', 'Město')->setRequired('Zadejte město (je taky potřeba kvůli faktuře)');
         $form->addText('billingZip', 'Psč')->setRequired('Zadejte psč (k adrese se hodí i psč ;))');

@@ -73,7 +73,7 @@ class SignPresenter extends Nette\Application\UI\Presenter
             $this->flashMessage('Nesprávné přihlašovací jméno nebo heslo.', 'alert alert-danger');
         }
 
-        $this->redirect('Homepage:default');
+        $this->redirect('Customer:default');
     }
 
 
