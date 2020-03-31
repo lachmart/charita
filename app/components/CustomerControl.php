@@ -44,7 +44,7 @@ class CustomerControl extends Control
         $grid->setDataSource($this->customerRepository->getAll());
 
         //$grid->addColumnText('billingFullName', 'jméno')->setSortable()->addAttributes(["width" => "15%"]);
-        //$grid->addColumnLink('customerId', 'číslo zákazníka', 'detail','customerId',['customerId'=>'customerId'])->setSortable()->addAttributes(["width" => "10%"])->setFilterText();
+        $grid->addColumnLink('customerId', 'číslo zákazníka', 'detail','customerId',['customerId'=>'customerId'])->setSortable()->addAttributes(["width" => "10%"])->setFilterText();
         $grid->addColumnLink('billingFullName', 'Zákazník', 'Customer:detail','billingFullName',['customerId'=>'customerId'])->setSortable()->addAttributes(["width" => "20%"])->setFilterText();
         $grid->addColumnLink('billingStreet', 'ulice , číslo','Customer:detail','billingStreet',['customerId'=>'customerId'])->addAttributes(["width" => "20%"])->setFilterText();
         $grid->addColumnLink('billingCity', 'město', 'Customer:detail','billingCity',['customerId'=>'customerId'])->addAttributes(["width" => "20%"])->setFilterText();

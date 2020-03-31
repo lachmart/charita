@@ -75,6 +75,7 @@ class CustomerPresenter extends BasePresenter
     function renderCreate($customerTypeId)
     {
       $this->template->showInvoiceCreate = 0;
+      $this->customerId = 0;
        // $this->template->customerAttributes = $this->customerRepository->getAllCustomerAttributesForCustomerType($customerTypeId);
         //$this->customerTypeId = $customerTypeId;
     }
@@ -127,8 +128,14 @@ class CustomerPresenter extends BasePresenter
 
         $form->onSuccess[] = function (Nette\Application\UI\Form $form) {
           if($form['submit']->isSubmittedBy()){
-            $this->flashMessage('Zákazník byl aktualizován a změny uloženy.', 'alert-success');
-            $this->redirect('Customer:');
+            if($this->customerId){
+              $this->flashMessage('Zákazník byl aktualizován a změny uloženy.', 'alert-success');
+              $this->redirect('Customer:detail');
+            }
+            else{
+              $this->flashMessage('Zákazník byl vytvořen.', 'alert-success');
+              $this->redirect('Customer:');
+            }
           }
           if($form['delete']->isSubmittedBy()){
             $this->flashMessage('Zákazník byl odstraněn.', 'alert-success');
