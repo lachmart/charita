@@ -45,6 +45,7 @@ class OrderForm
         $form->addGroup('');
         $form->addText('orderId', 'Id')->setAttribute('readonly','readonly');
         $form->addText('created', 'Vytvořeno')->setType('date');
+        $form->addText('completed', 'Nakoupeno')->setType('date');
         $form->addText('price', 'cena');
         $form->addTextArea('list', 'Nákupní seznam')->setHtmlAttribute('style', 'height:300px;')->setHtmlAttribute("autofocus");
         $form->addText('remark', 'Poznámka');

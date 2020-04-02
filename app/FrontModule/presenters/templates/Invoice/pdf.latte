@@ -1,24 +1,29 @@
-<h2>Faktura č. 1712 {$formatedId} {($invoice->created|date:'%W')+1} vystavena dne {$invoice->created|date:'%d. %m. %Y'}</h2>
+<h1><span style="font-weight:normal">FAKTURA</span> {$variabSymbol}</h1>
+Vyúčtování nákupů pro občany na Olomoucku:
+
+
 <hr>
+<br>
+<br>
 
       <table id="udaje_charity" style="width:100%" >
         <tr border="1">
-          <th colspan="2" >
-            Společnost
-          </th>
-          <th >
+          <td colspan="2" >
+          <u>  Dodavatel: </u>
+          </td>
+          <td>
 
-          </th>
-          <th >
-            Zákazník
-          </th>
+          </td>
+          <td>
+          <u>   Zákazník:</u>
+          </td>
         </tr>
         <tr>
           <td>
-            Název:
+            Charita Olomouc
           </td>
           <td>
-            Charita Olomouc
+
           </td>
           <td>
 
@@ -29,43 +34,56 @@
         </tr>
         <tr>
           <td>
-            Adresa:
+            Wurmova 5; 77900
           </td>
           <td>
-            Wurmova 5, Olomouc, 779 00
+
           </td>
           <td>
           </td>
-          <td align="right">
+          <td>
             {$customer->billingStreet}
           </td>
         </tr>
         <tr>
           <td>
-            Ič:
-          </td>
-          <td>
-            44936427
+            Ič: 44936427
           </td>
           <td>
 
           </td>
-          <td align="right">
+          <td>
+
+          </td>
+          <td>
               {$customer->billingZip}  {$customer->billingCity}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Č. účtu:  123-1468770267/0100
+          </td>
+          <td>
+          </td>
+          <td>
+
+          </td>
+          <td>
           </td>
         </tr>
       </table>
 
 
-
+<br>
 <hr>
+<br>
+<br>
 <table id="objednavky" style="width:100%;" >
   <tr>
+    <td>
+      <u>Položky:</u>
+    </td>
     <th>
-      Položky
-    </th>
-    <th>
-      Cena
     </th>
   </tr>
   <tr><td><br></td></tr>
@@ -82,10 +100,62 @@
 <tr><td><br></td></tr>
 <tr>
   <td>
-    <b>Celková částka</b>
+    Celková částka
   </td>
   <td align="right">
-    <b>{$invoice->total} kč</b>
+    {$invoice->total} kč
   </td>
 </tr>
+</table>
+<br>
+<hr>
+<br>
+<br>
+
+
+<table id="objednavky" style="width:100%;" border="1" >
+  <tr>
+    <td >
+      <b>ÚDAJE PRO PLATBU</b><br>
+      <table>
+      <tr>
+        <td>  částku:
+        </td>
+        <td><b>{$invoice->total} kč</b>
+        </td>
+      </tr>
+      <tr>
+        <td>  uhraďte převodem na účet: </td>
+        <td><b> 123-1468770267/0100 </b> </td>
+      </tr>
+      <tr>
+        <td>  variabilní symbol (VS): </td>
+        <td> <b>{$variabSymbol}</b> </td>
+      </tr>
+      <tr>
+        <td>  datum splatnosti: </td>
+        <td><b> {$dateToPay} </b> </td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+<i>Uhraďte  prosím přesnou částku a použijte uvedený variabilní symbol, usnadníte nám dohledání platby. Děkujeme.<i>
+<br>
+<br><br>
+<br><br>
+<br>
+<table>
+  <tr>
+    <td>Vystavila:</td>
+    <td> Eva Šanovcová</td>
+  </tr>
+  <tr>
+    <td>dne:</td>
+    <td>{$invoice->created|date:'%d. %m. %Y'}</td>
+  </tr>
+  <tr>
+    <td>kontakt:</td>
+    <td>Lucie Mokrá, tel. 739 246 033</td>
+  </tr>
 </table>

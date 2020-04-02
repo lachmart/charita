@@ -59,6 +59,12 @@ class OrderControl extends Control
 
         $grid->addColumnLink('orderId', 'číslo objednávky',  'Order:detail','orderId',['orderId'=>'orderId'])->setSortable();
         $grid->addColumnDateTime('created', 'vytvořeno')->setFormat('d.m.Y')->setSortable();
+        $grid->addColumnDateTime('completed', 'nakoupeno')
+        ->setRenderer(
+          function($item) {return 'ne';},
+          function($item) {return $item->completed->getTimestamp()>0?false:true;}
+          )
+        ->setSortable();
         $grid->addColumnLink('fk_customer', 'zákazník','Customer:detail','fk_customer',['customerId'=>'fk_customer'])->setReplacement($this->customerRepository->getCustomerNames());
         $grid->addColumnLink('list', 'nákupní seznam', 'Order:detail','list',['orderId'=>'orderId'])->setSortable();
         $grid->addColumnText('price', 'cena')->setEditableCallback([$this, 'priceEdited'])->setSortable();

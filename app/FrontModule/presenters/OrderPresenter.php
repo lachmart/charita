@@ -86,6 +86,8 @@ class OrderPresenter extends BasePresenter
           $orderBasicAttributes = $order->toArray();
           $orderBasicAttributes["customerName"] = $this->customerRepository->getName($order->fk_customer);
           $orderBasicAttributes["created"] = date('Y-m-d',$orderBasicAttributes["created"]->getTimestamp());
+          if($orderBasicAttributes["completed"]->getTimestamp()>0)
+            $orderBasicAttributes["completed"] = date('Y-m-d',$orderBasicAttributes["completed"]->getTimestamp());
           //$orderBasicAttributes["customerName"] = $order->customer->billingFullName;
 
           $this['orderForm']->setDefaults($orderBasicAttributes);
