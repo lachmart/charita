@@ -69,6 +69,7 @@ Vyúčtování nákupů pro občany na Olomoucku:
 
           </td>
           <td>
+            tel. {$customer->phone}
           </td>
         </tr>
       </table>
@@ -93,7 +94,7 @@ Vyúčtování nákupů pro občany na Olomoucku:
     Objednávka č. {$order->orderId} ze dne {$order->created|date:'%d. %m. %Y'}
   </td>
   <td align="right">
-    {$order->price} kč
+    {$order->price |number:2:',':' '} kč
   </td>
 </tr>
 {/foreach}
@@ -103,7 +104,7 @@ Vyúčtování nákupů pro občany na Olomoucku:
     Celková částka
   </td>
   <td align="right">
-    {$invoice->total} kč
+    {$invoice->total |number:2:',':' '} kč
   </td>
 </tr>
 </table>
@@ -121,7 +122,7 @@ Vyúčtování nákupů pro občany na Olomoucku:
       <tr>
         <td>  částku:
         </td>
-        <td><b>{$invoice->total} kč</b>
+        <td><b>{$invoice->total|number:2:',':' '} kč</b>
         </td>
       </tr>
       <tr>
