@@ -4,8 +4,8 @@ namespace App\Components;
 use Nette;
 use Ublaboo\DataGrid\DataGrid;
 use Nette\Application\UI\Form;
-use App\Model\Repository\OrderRepository;
-use App\Model\Repository\CustomerRepository;
+use App\Model\Repository\WRRepository;
+use App\Model\Repository\ZamestnanecRepository;
 use Nette\Security\User;
 
 use Tracy\Debugger;
@@ -14,70 +14,65 @@ Debugger::enable();
 
 
 
-class OrderControl extends Control
+class WRControl extends Control
 {
 
-    private $orderRepository;
-    private $customerRepository;
+    private $wRRepository;
+    private $zamestnanecRepository;
 
     /** @var User */
     private $user;
 
     /** @persistent */
-    public $customerId;
+    public $zamestnanecId;
 
-    public function __construct(OrderRepository $orderRepository, CustomerRepository $customerRepository, Nette\Security\User $user)
+    public function __construct(WRRepository $wRRepository, ZamestnanecRepository $zamestnanecRepository, Nette\Security\User $user)
     {
         parent::__construct();
-        $this->orderRepository = $orderRepository;
-        $this->customerRepository = $customerRepository;
+        $this->wRRepository = $wRRepository;
+        $this->zamestnanecRepository = $zamestnanecRepository;
         $this->user = $user;
     }
 
     public function render()
     {
-      //  $this->type = (int)$this->getPresenter()->orderTypeFilterId;
-        //$this->template->orderTypeFilterId = $this->type;
-        //$this->template->orderTypes = $this->orderRepository->getAllOrderTypes();
+      //  $this->type = (int)$this->getPresenter()->wRTypeFilterId;
+        //$this->template->wRTypeFilterId = $this->type;
+        //$this->template->wRTypes = $this->wRRepository->getAllWRTypes();
         $this->template->render(__DIR__ . '/order_control.latte');
 
     }
 
 
-    public function createComponentOrderGrid($name)
+    public function createComponentWRGrid($name)
     {
-        $this->customerId =$this->getPresenter()->customerId;
+        $this->zamestnanecId =$this->getPresenter()->zamestnanecId;
         $grid = new DataGrid($this, $name);
-        $grid->setPrimaryKey('orderId');
+        $grid->setPrimaryKey('pomerId');
 
 
-        if(isset($this->getPresenter()->invoiceId))
-          $grid->setDataSource($this->orderRepository->getAllInvoice($this->getPresenter()->invoiceId));
+        if(isset($this->getPresenter()->mzdovyComId))
+          $grid->setDataSource($this->wRRepository->getAllInvoice($this->getPresenter()->mzdovyComId));
         else {
-          $grid->setDataSource($this->orderRepository->getAllCustomer($this->customerId));
+          $grid->setDataSource($this->wRRepository->getAllZamestnanec($this->zamestnanecId));
         }
 
-        $grid->addColumnLink('orderId', 'číslo objednávky',  'Order:detail','orderId',['orderId'=>'orderId'])->setSortable();
-        $grid->addColumnDateTime('created', 'vytvořeno')->setFormat('d.m.Y')->setSortable();
-        $grid->addColumnDateTime('completed', 'nakoupeno')
-        ->setRenderer(
-          function($item) {return 'ne';},
-          function($item) {return $item->completed->getTimestamp()>0?false:true;}
-          )
-        ->setSortable();
-        $grid->addColumnLink('fk_customer', 'zákazník','Customer:detail','fk_customer',['customerId'=>'fk_customer'])->setReplacement($this->customerRepository->getCustomerNames());
-        $grid->addColumnLink('list', 'nákupní seznam', 'Order:detail','list',['orderId'=>'orderId'])->setSortable();
-        $grid->addColumnText('price', 'cena')->setEditableCallback([$this, 'priceEdited'])->setSortable();
-        $grid->addColumnLink('fk_invoice', 'vyfakturováno', 'Invoice:detail','fk_invoice',['invoiceId'=>'fk_invoice'])->addAttributes(["width" => "15%"])->setReplacement(['0'=>'ne'])->setSortable();
+        $grid->addColumnLink('pomerId', 'id Pracovního poměru',  'WR:detail','pomerId',['pomerId'=>'pomerId'])->setSortable();
+        $grid->addColumnDateTime('nastup', 'nástup')->setFormat('d.m.Y')->setSortable();
+        $grid->addColumnDateTime('vystup', 'výstup')->setSortable();
+        $grid->addColumnLink('zamestnanecId', 'zaměstnanec','Zamestnanec:detail','zamestnanecId',['zamestnanecId'=>'zamestnanecId'])->setReplacement($this->zamestnanecRepository->getZamestnanecNames());
+        $grid->addColumnLink('prepoctenyUvazek', 'přepočtený úvazek', 'WR:detail','prepoctenyUvazek',['pomerId'=>'pomerId'])->setSortable();
+        $grid->addColumnText('stredisko', 'středisko')->setEditableCallback([$this, 'priceEdited'])->setSortable();
+        //$grid->addColumnLink('fk_invoice', 'vyfakturováno', 'Invoice:detail','fk_invoice',['mzdovyComId'=>'fk_invoice'])->addAttributes(["width" => "15%"])->setReplacement(['0'=>'ne'])->setSortable();
         // $grid->addColumnText('billingZip', 'psč')->addAttributes(["width" => "25%"]);
         // $grid->addColumnText('email', 'email')->addAttributes(["width" => "25%"]);
         // $grid->addColumnText('phone', 'telefon')->addAttributes(["width" => "25%"]);
-        $grid->addAction('link2', 'Uložit pdf', 'Order:print');
-        $grid->addAction('link', 'Detail', 'Order:detail');
+      //  $grid->addAction('link2', 'Uložit pdf', 'WR:print');
+      //  $grid->addAction('link', 'Detail', 'WR:detail');
 
 
         $grid->setDefaultPerPage(50);
-        $grid->setDefaultSort(['orderId' => 'DESC']);
+        $grid->setDefaultSort(['pomerId' => 'DESC']);
         $grid->setTranslator($this->translator);
         //$grid->addFilterMultiSelect('buildingName', 'buildingName', ['První budova', 'Druhá']);
         $grid->setStrictSessionFilterValues(FALSE);
@@ -85,7 +80,7 @@ class OrderControl extends Control
     }
     public function priceEdited($id,$value)
     {
-      return $this->orderRepository->updatePrice($id,$value, $this->user->getId());
+      return $this->wRRepository->updatePrice($id,$value, $this->user->getId());
     }
 
 

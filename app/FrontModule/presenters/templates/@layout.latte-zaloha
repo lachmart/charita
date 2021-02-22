@@ -55,8 +55,8 @@
 	            <li n:class="$presenter->isLinkCurrent('Device:*') ? active">
 	                <a href="{link Device:}">Zařízení</a>
 	            </li>
-				<li n:class="$presenter->isLinkCurrent('Customer:*') ? active">
-	                <a href="{link Customer:}">Místnosti</a>
+				<li n:class="$presenter->isLinkCurrent('Zamestnanec:*') ? active">
+	                <a href="{link Zamestnanec:}">Místnosti</a>
 	            </li>
 {* 	            <li>
 	                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>

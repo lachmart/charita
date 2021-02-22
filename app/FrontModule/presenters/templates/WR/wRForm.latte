@@ -1,0 +1,143 @@
+{block wRForm}
+
+{form wRForm}
+
+<!-- Jednoduché vykreslení chyb -->
+<div n:if="$form->hasErrors()">
+    <div class="alert alert-danger" n:foreach="$form->errors as $error">{$error}</div>
+</div>
+
+
+<div class="card mb-4">
+    <div class="card-body">
+        {* <div class="row mb-4">
+            {label	zamestnanecId/}
+            {input	zamestnanecId}
+        </div> *}
+        {* <div class="card-header">
+          Údaje o zaměstnanci:
+          </div> *}
+        <div class="row mb-4">
+            <div class="col-sm-6">
+                {label pomerId/}
+				{input pomerId}
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="row mb-4">
+            <div class="col-sm-6">
+                {label nastup/}
+				{input nastup}
+            </div>
+            <div class="col-sm-6">
+                {label    vystup/}
+        {input    vystup}
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-sm-6">
+                {label stredisko/}
+				{input stredisko}
+            </div>
+            <div class="col-sm-6">
+                {label druhPP/}
+				{input druhPP}
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-sm-6">
+                {label zamestnanecId/}
+				{input zamestnanecId}
+            </div>
+            <div class="col-sm-6">
+                {label    zamestnanecName/}
+				{input    zamestnanecName}
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-sm-6">
+                {label pracovniZarazeni/}
+				{input pracovniZarazeni}
+            </div>
+            <div class="col-sm-6">
+                {label    priplatekZaRizeni/}
+				{input    priplatekZaRizeni}
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-sm-6">
+                {label uvazekHodinTydne/}
+				{input uvazekHodinTydne}
+            </div>
+            <div class="col-sm-6">
+                {label prepoctenyUvazek/}
+				{input prepoctenyUvazek}
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-sm-6">
+                {label mzda/}
+				{input mzda}
+            </div>
+            <div class="col-sm-6">
+                {label    druhMzdy/}
+				{input    druhMzdy}
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-sm-6">
+                {label priplatekZaRizeni/}
+				{input priplatekZaRizeni}
+            </div>
+            <div class="col-sm-6">
+                {label    osobniHodnoceni/}
+				{input    osobniHodnoceni}
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-sm-6">
+                {label zapoctenaPraxe/}
+				{input zapoctenaPraxe}
+            </div>
+            <div class="col-sm-6">
+                {label    primaPece/}
+				{input    primaPece}
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-sm-6">
+                {label souladSS/}
+				{input souladSS}
+            </div>
+            <div class="col-sm-6">
+                {label    pracKalendar/}
+				{input    pracKalendar}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{*
+		<div class="row mb-5">
+			<div class="col-sm-6 offset-sm-5">
+                {label submit/}
+                {input submit}
+								{if $presenter->isLinkCurrent("detail")}
+									{label delete/}
+		              {input delete}
+								{/if}
+
+				<a href="{if $zamestnanecId}{link Zamestnanec:}{else}{link WR:}{/if}" class="btn btn-secondary float-right" role="button">Zrušit</a>
+
+			</div>
+		</div> *}
+
+	{/form}
+
+
+
+{/block}

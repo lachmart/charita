@@ -1,4 +1,4 @@
-<h2>Objednávka č. {$order->orderId} ze dne {$order->created|date:'%d. %m. %Y'}</h2>
+<h2>Objednávka č. {$wR->pomerId} ze dne {$wR->created|date:'%d. %m. %Y'}</h2>
 <table style="width:100%">
   <tr>
     <th></th>
@@ -6,31 +6,31 @@
   </tr>
   <tr>
     <td>Jméno:</td>
-    <td>{$customer->billingFullName}</td>
+    <td>{$zamestnanec->billingFullName}</td>
   </tr>
   <tr>
     <td>Adresa:</td>
-    <td>{$customer->billingStreet}</td>
+    <td>{$zamestnanec->billingStreet}</td>
   </tr>
   <tr>
     <td></td>
-    <td>{$customer->billingZip} {$customer->billingCity}</td>
+    <td>{$zamestnanec->billingZip} {$zamestnanec->billingCity}</td>
   </tr>
   <tr>
     <td>Telefon:</td>
-    <td>{$customer->phone}</td>
+    <td>{$zamestnanec->phone}</td>
   </tr>
   <tr>
     <td>Email:</td>
-    <td>{$customer->email}</td>
+    <td>{$zamestnanec->email}</td>
   </tr>
   <tr>
     <td>Poznámka 1:</td>
-    <td>{$customer->remark}</td>
+    <td>{$zamestnanec->remark}</td>
   </tr>
   <tr>
     <td>Poznámka 2:</td>
-    <td>{$order->remark}</td>
+    <td>{$wR->remark}</td>
   </tr>
   <tr>
     <td>Nákupní seznam:</td>
@@ -38,6 +38,6 @@
   </tr>
   <tr>
     <td></td>
-    <td><pre>{$order->list}</pre></td>
+    <td><pre>{$wR->list}</pre></td>
   </tr>
 </table>

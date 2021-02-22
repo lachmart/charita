@@ -55,13 +55,13 @@ a:focus {
   min-width: 250px;
   max-width: 250px;
   min-height: 100vh;
-  background: #7386D5;
+  background: #73D6D5;
   color: #fff;
   transition: all 0.3s;
 }
 #sidebar .sidebar-header {
   padding: 20px;
-  background: #6d7fcc;
+  background: #6dDfcc;;
 }
 #sidebar ul.components {
   padding: 20px 0;
@@ -83,12 +83,12 @@ a:focus {
 #sidebar ul.components li.active > a,
 #sidebar ul.components a[aria-expanded="true"] {
   color: #fff;
-  background: #6d7fcc;
+  background: #6dDfcc;;
 }
 ul ul a {
   font-size: 0.9em !important;
   padding-left: 30px !important;
-  background: #6d7fcc;
+  background: #6dDfcc;;
 }
 #sidebar.active {
   margin-left: -250px;

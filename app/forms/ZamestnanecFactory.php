@@ -10,22 +10,22 @@ namespace App\Forms;
 use Nette;
 use Nette\Application\UI;
 use Nette\Forms\Controls;
-use App\Model\Repository\CustomerRepository;
+use App\Model\Repository\ZamestnanecRepository;
 
 
-class CustomerForm
+class ZamestnanecForm
 {
 
-    /** @var CustomerRepository */
-    private $customerRepository;
+    /** @var ZamestnanecRepository */
+    private $zamestnanecRepository;
 
 
 
 
-    public function __construct(CustomerRepository $customerRepository)
+    public function __construct(ZamestnanecRepository $zamestnanecRepository)
     {
         //parent::__construct();
-        $this->customerRepository = $customerRepository;
+        $this->zamestnanecRepository = $zamestnanecRepository;
     }
 
 
@@ -39,25 +39,26 @@ class CustomerForm
         $form->getElementPrototype()->class('ajax');
 
         $form->addGroup('');
-        $form->addText('customerId', 'Id')->setAttribute('readonly','readonly');
-        $form->addText('billingFullName', 'Jméno, Příjmení')->setRequired('Zadejte prosím jméno');
-        $form->addText('billingStreet', 'Ulice, číslo')->setRequired('Zadejte ulici (je potřeba kvůli faktuře)');
-        $form->addText('billingCity', 'Město')->setRequired('Zadejte město (je taky potřeba kvůli faktuře)');
-        $form->addText('billingZip', 'Psč')->setRequired('Zadejte psč (k adrese se hodí i psč ;))');
-        $form->addText('email', 'Email');
-        $form->addText('phone', 'Telefon');
-        $form->addText('remark', 'Poznámka');
+        $form->addText('zamestnanecId', 'Id')->setAttribute('readonly','readonly');
+        $form->addText('jmeno', 'Jméno Příjmení')->setRequired('Zadejte prosím jméno');
+        $form->addText('pohlavi', 'pohlaví');
+        $form->addText('narozeni', 'narození');
+        $form->addText('zapoctenaPraxe', 'započtená praxe');
+        $form->addText('nastup', 'nástup');
+        $form->addText('vzdelani', 'vzdělání');
+        $form->addText('invalidita', 'invalidita');
+        $form->addText('osobniCislo', 'osobní číslo');
       //  $form->addText('floor', 'Podlaží')->setRequired('Zadejte unikátní číslo místnosti');//->setAttribute('readonly','readonly');
 
 
       //  $form->addSelect('buildingId', 'Budova', $this->buildingRepository->getBuildingNames())->setRequired('Vyberte budovu');
-      //  $form->addText('customerNumber', 'Označení místnosti')->setRequired('Zadejte označení místnosti');
+      //  $form->addText('zamestnanecNumber', 'Označení místnosti')->setRequired('Zadejte označení místnosti');
 
 
 
 
-        $form->addSubmit('submit', 'Uložit informace o zákazníkovi');
-        $form->addSubmit('delete', 'Odstranit zákazníka')->setHtmlAttribute("onclick", 'return confirm("Opravdu odstranit?")');
+        $form->addSubmit('submit', 'Uložit informace o zaměstnanecovi');
+        $form->addSubmit('delete', 'Odstranit zaměstnaneca')->setHtmlAttribute("onclick", 'return confirm("Opravdu odstranit?")');
         $form->onSuccess[] = [$this, 'processForm'];
 
 
@@ -102,16 +103,16 @@ class CustomerForm
 
     private function updateCreate($form, $values)
     {
-      $customerId = $values->customerId;
+      $zamestnanecId = $values->zamestnanecId;
 
       $data = $values;
 
-      if ($customerId) {
-          $customer = $this->customerRepository->getCustomer($customerId);
-          $customer->update($data);
+      if ($zamestnanecId) {
+          $zamestnanec = $this->zamestnanecRepository->getZamestnanec($zamestnanecId);
+          $zamestnanec->update($data);
       }
       else {
-          $customerId = $this->customerRepository->addCustomer($data);
+          $zamestnanecId = $this->zamestnanecRepository->addZamestnanec($data);
           }
 
     }
@@ -119,13 +120,13 @@ class CustomerForm
     private function delete($form, $values)
     {
       try{
-      $this->customerRepository->deleteCustomer($values->customerId);
+      $this->zamestnanecRepository->deleteZamestnanec($values->zamestnanecId);
       }
       catch(Nette\Database\ForeignKeyConstraintViolationException $e){
-        $form->addError('Zákazníka není možné odstranit. Pravděpodobně má přiřazené objednávky nebo faktury.');
+        $form->addError('Zaměstnaneca není možné odstranit. Pravděpodobně má přiřazené objednávky nebo faktury.');
       }
-        //  $customerId = $this->customerRepository->addCustomer($data);
-         // $customer = $this->customerRepository->getCustomer($customerId);
+        //  $zamestnanecId = $this->zamestnanecRepository->addZamestnanec($data);
+         // $zamestnanec = $this->zamestnanecRepository->getZamestnanec($zamestnanecId);
           //$this->flashMessage('Bylo zaevidováno nové zařízení: '.$values->name, 'alert-success');
 
     }

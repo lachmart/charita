@@ -14,14 +14,18 @@ session:
 services:
 	- App\Model\UserManager
 	- App\Model\Repository\UserRepository
-	- App\Model\Repository\CustomerRepository
-	- App\Components\ICustomerControlFactory
-	- App\Forms\CustomerForm
-	- App\Model\Repository\OrderRepository
-	- App\Components\IOrderControlFactory
-	- App\Forms\OrderForm
+	- App\Model\Repository\ZamestnanecRepository
+	- App\Model\Repository\OsobaRepository
+	- App\Components\IZamestnanecControlFactory
+	- App\Forms\ZamestnanecForm
+	- App\Model\Repository\WRRepository
+	- App\Model\Repository\PohledRepository
+	- App\Components\IWRControlFactory
+	- App\Forms\WRForm
 	- App\Model\Repository\InvoiceRepository
 	- App\Components\IInvoiceControlFactory
 	- App\Forms\InvoiceForm
+	- App\Components\IRozpadstrediskaControlFactory
+	- App\Components\IPohledControlFactory
 	router: App\RouterFactory::createRouter
 	authorizator: App\Model\Security\PermissionFactory::create()

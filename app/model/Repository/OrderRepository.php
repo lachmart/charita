@@ -3,61 +3,45 @@
 namespace App\Model\Repository;
 
 
-class OrderRepository extends Repository
+class AWRRepository extends Repository
 {
 
-    private $table = "order";
+    protected $table = "pracovnipomer";
 
     public function getAll()
     {
         return $this->db->table($this->table)->fetchAll();
     }
-    public function getAllCustomer($customerId)
+    public function getAllZamestnanec($zamestnanecId)
     {
-      if(!$customerId)
+      if(!$zamestnanecId)
         return $this->getAll();
       else {
-        return $this->db->table($this->table)->where("fk_customer",$customerId)->fetchAll();
+        return $this->db->table($this->table)->where("zamestnanecId",$zamestnanecId)->fetchAll();
       }
     }
-    public function getAllInvoice($invoiceId)
-    {
-      return $this->db->table($this->table)->where("fk_invoice",$invoiceId)->fetchAll();
-    }
+    // public function getAllInvoice($mzdovyComId)
+    // {
+    //   return $this->db->table($this->table)->where("fk_invoice",$mzdovyComId)->fetchAll();
+    // }
 
-    public function addOrder($data)
+
+    public function updateWR($wRData)
     {
-        return $this->db->table($this->table)->insert($data);
-    }
-    public function getOrder($orderId)
-    {
-        return $this->db->table($this->table)->get($orderId);
-    }
-    public function updateOrder($orderData)
-    {
-      $order = $this->getOrder($orderData->orderId);
-      if($this->canUpdate($order))
+      $wR = $this->getWR($wRData->pomerId);
+      if($this->canUpdate($wR))
       {
-        $order->update($orderData);
+        $wR->update($wRData);
         return 1;
       }
       return 0;
     }
-    public function deleteOrder($orderId)
+    public function updatePrice($pomerId, $price, $userId)
     {
-      $order = $this->getOrder($orderId);
-      if($this->canUpdate($order))
+      $wR = $this->getWR($pomerId);
+      if($this->canUpdate($wR))
       {
-        return $order->delete();
-      }
-      return false;
-    }
-    public function updatePrice($orderId, $price, $userId)
-    {
-      $order = $this->getOrder($orderId);
-      if($this->canUpdate($order))
-      {
-          $order->update([
+          $wR->update([
           'price'=>$price,
           'price_timestamp'=>date('Y-m-d H:i:s',time()),
           'price_timestamp_created_by'=>$userId
@@ -66,27 +50,35 @@ class OrderRepository extends Repository
       }
       return 0;
     }
-    private function canUpdate($order){
-      if($order->fk_invoice)
+    private function canUpdate($wR){
+      if($wR->fk_invoice)
         return false;
       return true;
     }
 
-    public function getTotalInvoice($invoiceId)
+    public function getTotalInvoice($mzdovyComId)
     {
-      return $this->db->table($this->table)->where("fk_invoice",$invoiceId)->sum("price");
+      return $this->db->table($this->table)->where("fk_invoice",$mzdovyComId)->sum("price");
     }
-    public function getOrdersWithoutInvoice($customerId)
+    public function getWRsWithoutInvoice($zamestnanecId)
     {
-        return $this->db->table($this->table)->where("fk_invoice",0)->where("fk_customer",$customerId)->where("price >",0);
-    //  $this->db->table($this->table)->where("fk_customer",$customerId)->where("fk_invoice",0);
+        return $this->db->table($this->table)->where("fk_invoice",0)->where("zamestnanecId",$zamestnanecId)->where("price >",0);
+    //  $this->db->table($this->table)->where("zamestnanecId",$zamestnanecId)->where("fk_invoice",0);
     }
-    public function addInvoiceId($orderId, $invoiceId)
+    public function addInvoiceId($pomerId, $mzdovyComId)
     {
-      $order = $this->getOrder($orderId);
-      $order->update([
-        'fk_invoice'=>$invoiceId,
+      $wR = $this->getWR($pomerId);
+      $wR->update([
+        'fk_invoice'=>$mzdovyComId,
       ]);
+    }
+    public function getAllRozpad($mzdovyComId)
+    {
+      if(!$mzdovyComId)
+        return $this->getAll();
+      else {
+        return $this->db->table("rozpadnastredisko")->where("FK_MzdovyList",$mzdovyComId)->fetchAll();
+      }
     }
 
 

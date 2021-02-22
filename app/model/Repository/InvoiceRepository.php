@@ -6,36 +6,40 @@ namespace App\Model\Repository;
 class InvoiceRepository extends Repository
 {
 
-    private $table = "invoice";
+    protected $table = "mzdovylistCom";
 
     public function getAll()
     {
         return $this->db->table($this->table)->fetchAll();
     }
-    public function getAllCustomer($customerId)
+    public function getAllZamestnanec($zamestnanecId)
     {
-      if(!$customerId)
+      if(!$zamestnanecId)
         return $this->getAll();
       else {
-        return $this->db->table($this->table)->where("fk_customer",$customerId)->fetchAll();
+          return $this->db->table($this->table)->where("zamestnanecId",$zamestnanecId)->fetchAll();
       }
+    }
+    public function getAllPomer($zamestnanecId)
+    {
+        return $this->db->table($this->table)->where("zamestnanecId",$zamestnanecId)->fetchAll();
     }
     public function addInvoice($data)
     {
         return $this->db->table($this->table)->insert($data);
     }
-    public function getInvoice($invoiceId)
+    public function getInvoice($mzdovyComId)
     {
-        return $this->db->table($this->table)->get($invoiceId);
+        return $this->db->table($this->table)->get($mzdovyComId);
     }
-    public function deleteInvoice($invoiceId)
+    public function deleteInvoice($mzdovyComId)
     {
-        $this->db->table('order')->where('fk_invoice', $invoiceId)->update(['fk_invoice'=>0]);
-        return $this->db->table($this->table)->where('invoiceId', $invoiceId)->delete();
+        $this->db->table('order')->where('fk_invoice', $mzdovyComId)->update(['fk_invoice'=>0]);
+        return $this->db->table($this->table)->where('mzdovyComId', $mzdovyComId)->delete();
     }
-    public function makeInvoice($customerId)
+    public function makeInvoice($zamestnanecId)
     {
-        $data["fk_customer"] = $customerId;
+        $data["zamestnanecId"] = $zamestnanecId;
         return $this->addInvoice($data);
       }
 

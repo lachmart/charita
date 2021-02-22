@@ -1,11 +1,11 @@
 <?php
 namespace App\Components;
 
-interface ICustomerControlFactory
+interface IOsobaControlFactory
 {
 
     /**
-     * @return CustomerControl
+     * @return OsobaControl
      */
     function create();
 

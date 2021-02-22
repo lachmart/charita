@@ -1,0 +1,102 @@
+<?php
+
+namespace App\Model\Repository;
+
+
+class PohledRepository extends Repository
+{
+
+    protected $table = "mzdovylist";
+
+    public function getAll()
+    {
+        return $this->db->fetchAll("Select * from mzdovylist INNER JOIN pracovnipomer ON mzdovylist.FK_pracovniPomer=pracovnipomer.pomerId LEFT JOIN rozpadnastredisko ON mzdovylist.mzdovyComId=rozpadnastredisko.FK_MzdovyList AND rozpadnastredisko.verze = 0");
+    }
+    public function getAllZamestnanec($zamestnanecId)
+    {
+      if(!$zamestnanecId)
+        return $this->getAll();
+      else {
+        return $this->db->table($this->table)->where("zamestnanecId",$zamestnanecId)->fetchAll();
+      }
+    }
+    // public function getAllInvoice($mzdovyComId)
+    // {
+    //   return $this->db->table($this->table)->where("fk_invoice",$mzdovyComId)->fetchAll();
+    // }
+
+    public function addPohled($data)
+    {
+        return $this->db->table($this->table)->insert($data);
+    }
+    public function getPohled($pomerId)
+    {
+        return $this->db->table($this->table)->get($pomerId);
+    }
+    public function updatePohled($pohledData)
+    {
+      $pohled = $this->getPohled($pohledData->pomerId);
+      if($this->canUpdate($pohled))
+      {
+        $pohled->update($pohledData);
+        return 1;
+      }
+      return 0;
+    }
+    public function deletePohled($pomerId)
+    {
+      $pohled = $this->getPohled($pomerId);
+      if($this->canUpdate($pohled))
+      {
+        return $pohled->delete();
+      }
+      return false;
+    }
+    public function updatePrice($pomerId, $price, $userId)
+    {
+      $pohled = $this->getPohled($pomerId);
+      if($this->canUpdate($pohled))
+      {
+          $pohled->update([
+          'price'=>$price,
+          'price_timestamp'=>date('Y-m-d H:i:s',time()),
+          'price_timestamp_created_by'=>$userId
+        ]);
+        return 1;
+      }
+      return 0;
+    }
+    private function canUpdate($pohled){
+      if($pohled->fk_invoice)
+        return false;
+      return true;
+    }
+
+    public function getTotalInvoice($mzdovyComId)
+    {
+      return $this->db->table($this->table)->where("fk_invoice",$mzdovyComId)->sum("price");
+    }
+    public function getPohledsWithoutInvoice($zamestnanecId)
+    {
+        return $this->db->table($this->table)->where("fk_invoice",0)->where("zamestnanecId",$zamestnanecId)->where("price >",0);
+    //  $this->db->table($this->table)->where("zamestnanecId",$zamestnanecId)->where("fk_invoice",0);
+    }
+    public function addInvoiceId($pomerId, $mzdovyComId)
+    {
+      $pohled = $this->getPohled($pomerId);
+      $pohled->update([
+        'fk_invoice'=>$mzdovyComId,
+      ]);
+    }
+    public function getAllRozpad($mzdovyComId)
+    {
+      if(!$mzdovyComId)
+        return $this->getAll();
+      else {
+        return $this->db->table("rozpadnastredisko")->where("FK_MzdovyList",$mzdovyComId)->fetchAll();
+      }
+    }
+
+
+
+}

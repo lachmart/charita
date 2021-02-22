@@ -10,25 +10,25 @@ namespace App\Forms;
 use Nette;
 use Nette\Application\UI;
 use Nette\Forms\Controls;
-use App\Model\Repository\OrderRepository;
+use App\Model\Repository\WRRepository;
 use Nette\Security\User;
 
 
-class OrderForm
+class AWRForm
 {
 
-    /** @var OrderRepository */
-    private $orderRepository;
+    /** @var WRRepository */
+    private $wRRepository;
     /** @var User */
     private $user;
 
 
 
 
-    public function __construct(OrderRepository $orderRepository, Nette\Security\User $user)
+    public function __construct(WRRepository $wRRepository, Nette\Security\User $user)
     {
         //parent::__construct();
-        $this->orderRepository = $orderRepository;
+        $this->wRRepository = $wRRepository;
         $this->user = $user;
     }
 
@@ -43,16 +43,18 @@ class OrderForm
         $form->getElementPrototype()->class('ajax');
 
         $form->addGroup('');
-        $form->addText('orderId', 'Id')->setAttribute('readonly','readonly');
-        $form->addText('created', 'Vytvořeno')->setType('date');
-        $form->addText('completed', 'Nakoupeno')->setType('date');
-        $form->addText('price', 'cena');
-        $form->addTextArea('list', 'Nákupní seznam')->setHtmlAttribute('style', 'height:300px;')->setHtmlAttribute("autofocus");
-        $form->addText('remark', 'Poznámka');
-        $form->addText('price_timestamp', 'Cena zadána')->setAttribute('readonly','readonly');
-        $form->addText('fk_customer', 'Zákazník')->setAttribute('readonly','readonly');
-        $form->addText('fk_invoice', 'Faktura')->setAttribute('readonly','readonly');
-        $form->addText('customerName', 'Zákazník')->setDisabled();//->setAttribute('readonly','readonly');
+        $form->addText('pomerId', 'Id')->setAttribute('readonly','readonly');
+        $form->addText('nastup', 'nástup')->setType('date');
+        $form->addText('vystup', 'výstup')->setType('date');
+        $form->addText('mzda', 'mzda');
+        $form->addText('priplatekZaRizeni', 'příplatek za řízení');
+        $form->addText('osobniHodnoceni', 'osobní hodnocení');
+        $form->addText('primaPece', 'přímá péče');
+        $form->addText('prepoctenyUvazek', 'přepočtený úvazek');
+        $form->addText('souladSS', 'soulad s SS');
+        $form->addText('zamestnanecId', 'Zaměstnanec')->setAttribute('readonly','readonly');
+      //  $form->addText('fk_invoice', 'Faktura')->setAttribute('readonly','readonly');
+        //$form->addText('zamestnanecName', 'Zaměstnanec')->setDisabled();//->setAttribute('readonly','readonly');
 
 
       //  $form->addSelect('buildingId', 'Budova', $this->buildingRepository->getBuildingNames())->setRequired('Vyberte budovu');
@@ -61,8 +63,8 @@ class OrderForm
 
 
 
-        $form->addSubmit('submit', 'Uložit objednávku');
-        $form->addSubmit('delete', 'Odstranit objednávku')->setHtmlAttribute("onclick", 'return confirm("Opravdu odstranit?")');
+        // $form->addSubmit('submit', 'Uložit objednávku');
+        // $form->addSubmit('delete', 'Odstranit objednávku')->setHtmlAttribute("onclick", 'return confirm("Opravdu odstranit?")');
         $form->onSuccess[] = [$this, 'processForm'];
 
 
@@ -107,16 +109,16 @@ class OrderForm
 
     private function updateCreate($form, $values)
     {
-      $orderId = $values->orderId;
+      $pomerId = $values->pomerId;
       $data = $values;
 
-      if ($orderId) {
-        $order = $this->orderRepository->getOrder($orderId);
-        if($values['price']!= $order->price){
+      if ($pomerId) {
+        $wR = $this->wRRepository->getWR($pomerId);
+        if($values['price']!= $wR->price){
           $data['price_timestamp']=date('Y-m-d H:i:s',time());
           $data['price_timestamp_created_by']=$this->user->getId();
         }
-        if(!$orderId = $this->orderRepository->updateOrder($data))
+        if(!$pomerId = $this->wRRepository->updateWR($data))
             $form->addError('Vyfakturovanou objednávku není možné měnit.');
       }
       else {
@@ -126,7 +128,7 @@ class OrderForm
             $data['price_timestamp']=date('Y-m-d H:i:s',time());
             $data['price_timestamp_created_by']=$this->user->getId();
           }
-          $orderId = $this->orderRepository->addOrder($data);
+          $pomerId = $this->wRRepository->addWR($data);
           }
 
     }
@@ -134,7 +136,7 @@ class OrderForm
     private function delete($form, $values)
     {
       try{
-        if(!$this->orderRepository->deleteOrder($values->orderId))
+        if(!$this->wRRepository->deleteWR($values->pomerId))
             $form->addError('Vyfakturovanou objednávku není možné odstranit.');
       }
       catch(Nette\Database\ForeignKeyConstraintViolationException $e){

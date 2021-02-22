@@ -15,11 +15,12 @@ use App\Model\Repository\InvoiceRepository;
 use App\Forms\IInvoiceFormFactory;
 use App\Forms\InvoiceForm;
 use App\Components\IInvoiceControlFactory;
-use App\Components\IOrderControlFactory;
-use App\Model\Repository\OrderRepository;
-use App\Model\Repository\CustomerRepository;
+use App\Components\IWRControlFactory;
+use App\Model\Repository\WRRepository;
+use App\Model\Repository\ZamestnanecRepository;
 use Mpdf\Mpdf as mPDF;
 use Nette\Application\UI\ITemplateFactory;
+use App\Components\IRozpadstrediskaControlFactory;
 //define("ALL", -1);
 
 class InvoicePresenter extends BasePresenter
@@ -27,11 +28,11 @@ class InvoicePresenter extends BasePresenter
     /** @var InvoiceRepository */
     private $invoiceRepository;
 
-    /** @var OrderRepository */
-    private $orderRepository;
+    /** @var WRRepository */
+    private $wRRepository;
 
-    /** @var CustomerRepository */
-    private $customerRepository;
+    /** @var ZamestnanecRepository */
+    private $zamestnanecRepository;
 
     /**
      * @var IInvoiceControlFactory
@@ -42,28 +43,36 @@ class InvoicePresenter extends BasePresenter
     /** @var \IInvoiceFormFactory */
     private $invoiceFormFactory;
 
-    public $customerControlFactory;
+    public $zamestnanecControlFactory;
     /**
-     * @var IOrderControlFactory
+     * @var IWRControlFactory
      * @inject
      */
-    public $orderControlFactory;
+    public $wRControlFactory;
 
     /** @var ITemplateFactory @inject */
     public $templateFactory;
 
     /** @persistent */
-    public $invoiceId;
+    public $mzdovyComId;
     /** @persistent */
-    public $customerId;
+    public $zamestnanecId;
+    /** @persistent */
+    public $pomerId;
 
-    public function __construct(InvoiceRepository $invoiceRepository,OrderRepository $orderRepository,CustomerRepository $customerRepository,
+    /**
+     * @var IRozpadstrediskaControlFactory
+     * @inject
+     */
+    public $rozpadstrediskaControlFactory;
+
+    public function __construct(InvoiceRepository $invoiceRepository,WRRepository $wRRepository,ZamestnanecRepository $zamestnanecRepository,
                                 InvoiceForm $invoiceFormFactory)
     {
         parent::__construct();
         $this->invoiceRepository = $invoiceRepository;
-        $this->orderRepository = $orderRepository;
-        $this->customerRepository = $customerRepository;
+        $this->wRRepository = $wRRepository;
+        $this->zamestnanecRepository = $zamestnanecRepository;
         $this->invoiceFormFactory =  $invoiceFormFactory;
 
       //  $this->deviceTypeFilterId = '-1';
@@ -74,46 +83,47 @@ class InvoicePresenter extends BasePresenter
 
     function renderDefault()
     {
-      $this->customerId = NULL;
+      $this->zamestnanecId = NULL;
+      $this->pomerId = NULL;
         //$this->template->invoiceTypes = $this->invoiceRepository->getAllInvoiceTypes();
 
     }
 
 
-    function actionCreate($customerId)
+    function actionCreate($zamestnanecId)
     {
-        $orders = $this->orderRepository->getOrdersWithoutInvoice($customerId);
-      if(count($orders)){
-        $invoiceId = $this->invoiceRepository->makeInvoice($customerId);
+        $wRs = $this->wRRepository->getWRsWithoutInvoice($zamestnanecId);
+      if(count($wRs)){
+        $mzdovyComId = $this->invoiceRepository->makeInvoice($zamestnanecId);
 
-       foreach ($orders as $order) {
-          $this->flashMessage('Objednávka '.$order->orderId.' byla přidána k faktuře.', 'alert-success');
-          $this->orderRepository->addInvoiceId($order->orderId, $invoiceId);
+       foreach ($wRs as $wR) {
+          $this->flashMessage('Objednávka '.$wR->pomerId.' byla přidána k faktuře.', 'alert-success');
+          $this->wRRepository->addInvoiceId($wR->pomerId, $mzdovyComId);
         }
-          $total = $this->orderRepository->getTotalInvoice($invoiceId);
+          $total = $this->wRRepository->getTotalInvoice($mzdovyComId);
           $data['total']=$total;
           $data['created_by']=$this->user->getId();
-          $invoice = $this->invoiceRepository->getInvoice($invoiceId);
+          $invoice = $this->invoiceRepository->getInvoice($mzdovyComId);
           $invoice->update($data);
         $this->flashMessage('Faktura za '.$total .' kč byla vytvořena a změny uloženy.', 'alert-success');
       }
       else
         $this->flashMessage('Nebyly nalezeny fakturovatelné objednávky.', 'alert-danger');
-      $this->redirect('Customer:');
+      $this->redirect('Zamestnanec:');
        // $this->template->invoiceAttributes = $this->invoiceRepository->getAllInvoiceAttributesForInvoiceType($invoiceTypeId);
-        //$this->customerId = $customerId;
-        //$this['invoiceForm']->setDefaults(['fk_customer'=>$customerId]);
+        //$this->zamestnanecId = $zamestnanecId;
+        //$this['invoiceForm']->setDefaults(['zamestnanecId'=>$zamestnanecId]);
 
     }
 
 
-    function renderDetail($invoiceId)
+    function renderDetail($mzdovyComId)
     {
-        $invoice = $this->invoiceRepository->getInvoice($invoiceId);
+        $invoice = $this->invoiceRepository->getInvoice($mzdovyComId);
         if($invoice){
           $invoiceBasicAttributes = $invoice->toArray();
-          $invoiceBasicAttributes["customerName"] = $this->customerRepository->getName($invoice->fk_customer);
-          //$invoiceBasicAttributes["customerName"] = $invoice->customer->billingFullName;
+          $invoiceBasicAttributes["zamestnanecName"] = $this->zamestnanecRepository->getName($invoice->zamestnanecId);
+          //$invoiceBasicAttributes["zamestnanecName"] = $invoice->zamestnanec->billingFullName;
 
           $this['invoiceForm']->setDefaults($invoiceBasicAttributes);
         }else {
@@ -135,13 +145,13 @@ class InvoicePresenter extends BasePresenter
     {
 
 
-        $form = $this->invoiceFormFactory->create($this->invoiceId);
+        $form = $this->invoiceFormFactory->create($this->mzdovyComId);
 
         $form->onSuccess[] = function (Nette\Application\UI\Form $form) {
           if($form['submit']->isSubmittedBy()){
             $this->flashMessage('Faktura byla aktualizována a změny uloženy.', 'alert-success');
-            if($this->customerId)
-              $this->redirect('Customer:');
+            if($this->zamestnanecId)
+              $this->redirect('Zamestnanec:');
             $this->redirect('Invoice:');
           }
           if($form['delete']->isSubmittedBy()){
@@ -156,7 +166,7 @@ class InvoicePresenter extends BasePresenter
     }
     protected function createComponentInvoiceLogEntryForm()
     {
-        $form = $this->invoiceLogEntryFormFactory->create($this->invoiceId, $this->user->getidentity()->userId, $this->user->getidentity()->userName);
+        $form = $this->invoiceLogEntryFormFactory->create($this->mzdovyComId, $this->user->getidentity()->userId, $this->user->getidentity()->userName);
 
         $form->onSuccess[] = function (Nette\Application\UI\Form $form) {
           if($form['submit']->isSubmittedBy()){
@@ -175,21 +185,21 @@ class InvoicePresenter extends BasePresenter
     {
         return $this->invoiceControlFactory->create();
     }
-    public function createComponentOrderControl()
+    public function createComponentRozpadstrediskaControl()
     {
-        return $this->orderControlFactory->create();
+        return $this->rozpadstrediskaControlFactory->create();
     }
 
-    public function actionPrint($invoiceId)
+    public function actionPrint($mzdovyComId)
     {
       $template = $this->templateFactory->createTemplate();
 
-      $invoice = $this->invoiceRepository->getInvoice($invoiceId);
+      $invoice = $this->invoiceRepository->getInvoice($mzdovyComId);
       $template->invoice = $invoice;
-      $template->customer = $this->customerRepository->getCustomer($invoice->fk_customer);
-      $template->orders = $this->orderRepository->getAllInvoice($invoiceId);
+      $template->zamestnanec = $this->zamestnanecRepository->getZamestnanec($invoice->zamestnanecId);
+      $template->wRs = $this->wRRepository->getAllInvoice($mzdovyComId);
 
-      $formatedId = sprintf("%03d", $invoice->fk_customer);
+      $formatedId = sprintf("%03d", $invoice->zamestnanecId);
       $weekCreated = date('W',$invoice->created->getTimestamp());
 
       $variabSymbol = "1712".$formatedId.$weekCreated;

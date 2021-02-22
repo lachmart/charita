@@ -1,0 +1,36 @@
+{* Device:detail *}
+
+{block content}
+
+
+<div id="banner" class="mb-4">
+	<h3 n:block=title>Detail pracovního poměru</h3>
+</div>
+
+{include 'wRForm.latte'}
+
+<ul class="nav nav-tabs" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" href="#orders" role="tab" data-toggle="tab">Mzdové listy</a>
+  </li>
+
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+	<div role="tabpanel" class="tab-pane in active" id="orders">
+			{control invoiceControl}
+	</div>
+</div>
+
+{/block}
+
+
+
+{block scripts}
+
+
+
+
+
+{/block}

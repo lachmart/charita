@@ -4,7 +4,7 @@ namespace App\Model\Repository;
 
 class UserRepository extends Repository
 {
-    private $table = "user";
+    protected $table = "user";
 
     public function getUserByUsername($username)
     {

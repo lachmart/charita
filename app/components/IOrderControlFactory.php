@@ -1,11 +1,11 @@
 <?php
 namespace App\Components;
 
-interface IOrderControlFactory
+interface IWRControlFactory
 {
 
     /**
-     * @return OrderControl
+     * @return WRControl
      */
     function create();
 

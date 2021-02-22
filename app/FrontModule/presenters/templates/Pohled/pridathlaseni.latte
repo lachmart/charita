@@ -1,0 +1,92 @@
+{* WR:default *}
+
+{block content}
+
+
+<div id="banner" class="mb-4">
+	<h3 n:block=title>Nové Hlášení</h3>
+  <label for="verze"></label>
+
+<form>
+	<label for="verze">Pracovník:</label>
+	<select id="verze">
+		<option value="0">Martin Lach</option>
+		<option value="1">1</option>
+	</select>
+	<br>
+		<label for="verze">Přímá péče:</label>
+	<select id="verze">
+		<option value="0">Ano</option>
+		<option value="1">Ne</option>
+	</select>
+	<h4>Rozdělení úvazku (celkem 0.9)</h4>
+	<label for="fname">Středisko 100:</label>
+  <input type="text" id="fname" name="fname" value='0.4'><br>
+  <label for="lname">Středisko 200:</label>
+  <input type="text" id="lname" name="lname" value='0.2'><br>
+  <label for="lname">Středisko 300:</label>
+  <input type="text" id="lname" name="lname" value='0.1'><br>
+  <label for="lname">Středisko 400:</label>
+  <input type="text" id="lname" name="lname" value='0.2'><br>
+
+<label for="birthday">Platnost od:</label>
+  <input type="date" id="birthday" name="birthday"><br>
+<button>přidat hlášení</button>
+</form>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+{/block}
+
+
+
+
+
+
+{block scripts}
+
+	<script>
+		$( "#typeFilter" ).change(function() {
+		    $.nette.ajax({
+		        type: "GET",
+		        url: {link wRControl-filterWRs!},
+		        data: { {$control->getParameterId('type')}: $(this).val()}
+
+		    });
+		});
+	</script>
+
+
+	<script>
+	  $.nette.ext("modals", {
+	          success: function(payload) {
+	              if (payload.redirect) {
+	                  $(".modal-ajax").modal("hide");
+	              } else if(payload.isModal) {
+	                  $('.modal-ajax').modal('show');
+	              }
+	          }
+	      });
+
+	  $.nette.ext("ajaxRedirect", {
+	      success: function (payload) {
+	          if (payload.redirect) {
+	              $.nette.ajax(payload.redirect);
+	          }
+	      }
+	  });
+	</script>
+
+
+
+
+{/block}

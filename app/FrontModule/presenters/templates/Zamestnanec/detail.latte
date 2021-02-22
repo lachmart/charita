@@ -4,29 +4,31 @@
 
 
 <div id="banner" class="mb-4">
-	<h3 n:block=title>Detail zákazníka</h3>
+	<h3 n:block=title>Detail zaměstnance</h3>
 </div>
 
-{include 'customerForm.latte'}
+{include 'zamestnanecForm.latte'}
 
 <ul class="nav nav-tabs" role="tablist">
   <li class="nav-item">
-    <a class="nav-link active" href="#orders" role="tab" data-toggle="tab">Objednávky</a>
+    <a class="nav-link active" href="#orders" role="tab" data-toggle="tab">Pracovní poměry</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#invoices" role="tab" data-toggle="tab">Faktury</a>
+    <a class="nav-link" href="#invoices" role="tab" data-toggle="tab">mzdové listy</a>
   </li>
+
 </ul>
 
 <!-- Tab panes -->
 <div class="tab-content">
 	<div role="tabpanel" class="tab-pane in active" id="orders">
-			{control orderControl}
+			{control wRControl}
 	</div>
 	<div role="tabpanel" class="tab-pane in" id="invoices">
 			{control invoiceControl}
 	</div>
-	</div>
+
+</div>
 
 
 {/block}

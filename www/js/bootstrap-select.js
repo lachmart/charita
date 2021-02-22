@@ -1608,7 +1608,7 @@
 
       if (this.options.dropupAuto) {
         // Get the estimated height of the menu without scrollbars.
-        // This is useful for smaller menus, where there might be plenty of customer
+        // This is useful for smaller menus, where there might be plenty of zamestnanec
         // below the button without setting dropup, but we can't know
         // the exact height of the menu until createView is called later
         estimate = liHeight * this.selectpicker.current.elements.length + menuPadding.vert;

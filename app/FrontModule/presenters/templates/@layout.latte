@@ -44,23 +44,29 @@
 				<nav id="sidebar">
 
 					<div class="sidebar-header">
-						<h3>Charita <small> / nákupy</small></h3>
+						<h3>Charita <small> / krabička</small></h3>
 					</div>
 
 					<ul class="list-unstyled components">
 						{* <li n:class="$presenter->isLinkCurrent('Homepage:*') ? active">
 							<a href="{link Homepage:}">Dashboard</a>
 						</li> *}
-								  <li n:class="$presenter->isLinkCurrent('Customer:*') ? active">
-								<a href="{link Customer:}">Zákazníci</a>
+								  <li n:class="$presenter->isLinkCurrent('Zamestnanec:*') ? active">
+								<a href="{link Zamestnanec:}">Zaměstnanci</a>
 					  </li>
 					</li>
-								<li n:class="$presenter->isLinkCurrent('Order:*') ? active">
-							<a href="{link Order:}">Objednávky</a>
+								<li n:class="$presenter->isLinkCurrent('WR:*') ? active">
+							<a href="{link WR:}">Pracovní poměry</a>
 					</li>
 				</li>
 							<li n:class="$presenter->isLinkCurrent('Invoice:*') ? active">
-						<a href="{link Invoice:}">Faktury</a>
+						<a href="{link Invoice:}">Mzdové listy souhrnné</a>
+				</li>
+							<li n:class="$presenter->isLinkCurrent('Pohled:default') ? active">
+						<a href="{link Pohled:default}">Pohled 1</a>
+				</li>
+							<li n:class="$presenter->isLinkCurrent('Pohled:hlaseni') ? active">
+						<a href="{link Pohled:hlaseni}">Hlášení</a>
 				</li>
 
 		{* 	            <li>
@@ -149,7 +155,7 @@
 					</nav>
 
 				{/if}
-				
+
 				{if count($flashes) > 0}
 					<div class="w-50">
 						<div n:foreach="$flashes as $flash" n:class="flash, alert, $flash->type">{$flash->message}</div>

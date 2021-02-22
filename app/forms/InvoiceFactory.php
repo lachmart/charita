@@ -11,7 +11,7 @@ use Nette;
 use Nette\Application\UI;
 use Nette\Forms\Controls;
 use App\Model\Repository\InvoiceRepository;
-use App\Model\Repository\OrderRepository;
+use App\Model\Repository\WRRepository;
 
 
 class InvoiceForm
@@ -19,23 +19,23 @@ class InvoiceForm
 
     /** @var InvoiceRepository */
     private $invoiceRepository;
-    /** @var OrderRepository */
-    private $orderRepository;
+    /** @var WRRepository */
+    private $wRRepository;
 
 
 
 
-    public function __construct(InvoiceRepository $invoiceRepository,OrderRepository $orderRepository)
+    public function __construct(InvoiceRepository $invoiceRepository,WRRepository $wRRepository)
     {
         //parent::__construct();
         $this->invoiceRepository = $invoiceRepository;
-        $this->orderRepository = $orderRepository;
+        $this->wRRepository = $wRRepository;
     }
 
 
 
 
-    public function create($invoiceId)
+    public function create($mzdovyComId)
     {
         $form = new Nette\Application\UI\Form;
 
@@ -43,15 +43,28 @@ class InvoiceForm
         $form->getElementPrototype()->class('ajax');
 
         $form->addGroup('');
-        $form->addText('invoiceId', 'Id')->setAttribute('readonly','readonly');
-        $form->addText('created', 'Vytvořeno')->setAttribute('readonly','readonly');
-        $form->addText('total', 'cena')->setAttribute('readonly','readonly');
-        $form->addText('fk_customer', 'Zákazník')->setDefaultValue($invoiceId)->setAttribute('readonly','readonly');
-        $form->addText('customerName', 'Zákazník')->setDisabled();
+        $form->addText('mzdovyComId', 'Id')->setAttribute('readonly','readonly');
+        $form->addText('zamestnanecName', 'Jméno zaměstnance')->setAttribute('readonly','readonly');
+        $form->addText('periodId', 'měsíc')->setAttribute('readonly','readonly');
+        $form->addText('FK_pracovniPomer', 'p. poměr')->setAttribute('readonly','readonly');
+        $form->addText('hrubaMzda', 'hrubá mzda')->setDefaultValue($mzdovyComId)->setAttribute('readonly','readonly');
+        $form->addText('socialniPojistneZamestnavatel', 'sp z-tel')->setDisabled();
+        $form->addText('zdravotniPojistneZamestnavatel', 'zp z-tel')->setDisabled();
+        $form->addText('mzdoveNaklady', 'mzdové náklady')->setDisabled();
+        /*$form->addText('mesicniOdmeny', 'měsíční odměny')->setDisabled();
+        $form->addText('premie', 'prémie')->setDisabled();
+        $form->addText('trinactyPlat', 'třináctý plat')->setDisabled();
+        $form->addText('odmenaZaDelsiObdobi', 'odměna za delší období')->setDisabled();
+        $form->addText('odpracovaneHodinyVcetnePrescasu', 'odpracovaneHodinyVcetnePrescasu')->setDisabled();
+        $form->addText('zTohoPrescas', 'z toho přesčas')->setDisabled();
+        $form->addText('dovolena', 'dovolená')->setDisabled();
+        $form->addText('placeneVolno', 'placené volno')->setDisabled();
+        $form->addText('nemoc', 'nemoc')->setDisabled();
+        $form->addText('celkemHodin', 'celkem hodin')->setDisabled();*/
 
 
-        $form->addSubmit('submit', 'Přepočítat fakturu');
-        $form->addSubmit('delete', 'Odstranit fakturu');
+      //  $form->addSubmit('submit', 'Přepočítat fakturu');
+      //  $form->addSubmit('delete', 'Odstranit fakturu');
         $form->onSuccess[] = [$this, 'processForm'];
 
 
@@ -96,22 +109,22 @@ class InvoiceForm
 
     private function updateCreate($form, $values)
     {
-      $invoiceId = $values->invoiceId;
+      $mzdovyComId = $values->mzdovyComId;
 
 
       $data = $values;
     //  $data['id'] = 1;
-      $data['total']=$this->orderRepository->getTotalInvoice($invoiceId);
+      $data['total']=$this->wRRepository->getTotalInvoice($mzdovyComId);
 
 
 
-      if ($invoiceId) {
-          $invoice = $this->invoiceRepository->getInvoice($invoiceId);
+      if ($mzdovyComId) {
+          $invoice = $this->invoiceRepository->getInvoice($mzdovyComId);
           $invoice->update($data);
       }
       else {
           $data['created']=date('Y-m-d H:i:s',time());
-          $invoiceId = $this->invoiceRepository->addInvoice($data);
+          $mzdovyComId = $this->invoiceRepository->addInvoice($data);
           }
 
     }
@@ -119,13 +132,13 @@ class InvoiceForm
     private function delete($form, $values)
     {
       try{
-      $this->invoiceRepository->deleteInvoice($values->invoiceId);
+      $this->invoiceRepository->deleteInvoice($values->mzdovyComId);
       }
       catch(Nette\Database\ForeignKeyConstraintViolationException $e){
         $form->addError('Fakturu není možné odstranit. Pravděpodobně má přiřazené objednávky.');
       }
-        //  $invoiceId = $this->invoiceRepository->addInvoice($data);
-         // $invoice = $this->invoiceRepository->getInvoice($invoiceId);
+        //  $mzdovyComId = $this->invoiceRepository->addInvoice($data);
+         // $invoice = $this->invoiceRepository->getInvoice($mzdovyComId);
           //$this->flashMessage('Bylo zaevidováno nové zařízení: '.$values->name, 'alert-success');
 
     }

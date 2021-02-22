@@ -1,0 +1,73 @@
+{* WR:default *}
+
+{block content}
+
+
+<div id="banner" class="mb-4">
+	<h3 n:block=title>Rozdělení na střediska</h3>
+  {* <label for="verze">Verze:</label>
+  <select id="verze">
+    <option value="0">0</option>
+    <option value="1">1</option>
+  </select>
+poznámky k verzi:
+	<div>
+		<button>spravovat verze</button>
+	</div> *}
+</div>
+
+
+
+{control pohledControl}
+
+
+
+
+
+
+
+{/block}
+
+
+
+
+
+
+{block scripts}
+
+	<script>
+		$( "#typeFilter" ).change(function() {
+		    $.nette.ajax({
+		        type: "GET",
+		        url: {link wRControl-filterWRs!},
+		        data: { {$control->getParameterId('type')}: $(this).val()}
+
+		    });
+		});
+	</script>
+
+
+	<script>
+	  $.nette.ext("modals", {
+	          success: function(payload) {
+	              if (payload.redirect) {
+	                  $(".modal-ajax").modal("hide");
+	              } else if(payload.isModal) {
+	                  $('.modal-ajax').modal('show');
+	              }
+	          }
+	      });
+
+	  $.nette.ext("ajaxRedirect", {
+	      success: function (payload) {
+	          if (payload.redirect) {
+	              $.nette.ajax(payload.redirect);
+	          }
+	      }
+	  });
+	</script>
+
+
+
+
+{/block}

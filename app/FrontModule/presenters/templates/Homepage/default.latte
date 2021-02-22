@@ -8,4 +8,15 @@
 </div>
 
 
-<p>Tohle je hlavní strana. Vlevo najdeš zákazníky, objednávky i faktury.</p>
+<p>Tohle je hlavní strana. Vlevo najdeš zaměstnanecy, objednávky i faktury.</p>
+
+<a n:href="Homepage:importPerson">Importovat osoby</a>
+<a n:href="Homepage:importEmployee">Importovat zaměstnance</a>
+<a n:href="Homepage:importWR">Importovat úvazky</a>
+<a n:href="Homepage:importWLPartial">Importovat mzdové listy částečné</a>
+<a n:href="Homepage:importWLCommon">Importovat mzdové listy common</a>
+
+{ifset $result}
+Result:
+{print_r($result)}
+{/ifset}

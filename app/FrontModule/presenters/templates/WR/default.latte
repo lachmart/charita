@@ -1,23 +1,15 @@
-{* Customer:default *}
+{* WR:default *}
 
 {block content}
 
 
 <div id="banner" class="mb-4">
-	<h3 n:block=title>Přehled zákazníků</h3>
+	<h3 n:block=title>Přehled pracovních poměrů</h3>
 </div>
 
 
-<div class="row">
-    <div class="col-12">
-	<div class="padding-y-sm float-right p-3" role="group">
-	  <a n:href="Customer:create" class="btn btn-secondary btn-sm mr-2 float-left"><i class="fas fa-plus"></i> Přidat nového zákazníka</a>
-	</div>
 
-	</div>
-</div>
-
-{control customerControl}
+{control wRControl}
 
 
 
@@ -38,7 +30,7 @@
 		$( "#typeFilter" ).change(function() {
 		    $.nette.ajax({
 		        type: "GET",
-		        url: {link customerControl-filterCustomers!},
+		        url: {link wRControl-filterWRs!},
 		        data: { {$control->getParameterId('type')}: $(this).val()}
 
 		    });

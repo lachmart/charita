@@ -15,7 +15,7 @@ Vyúčtování nákupů pro občany na Olomoucku:
 
           </td>
           <td>
-          <u>   Zákazník:</u>
+          <u>   Zaměstnanec:</u>
           </td>
         </tr>
         <tr>
@@ -29,7 +29,7 @@ Vyúčtování nákupů pro občany na Olomoucku:
 
           </td>
           <td >
-            {$customer->billingFullName}
+            {$zamestnanec->billingFullName}
           </td>
         </tr>
         <tr>
@@ -42,7 +42,7 @@ Vyúčtování nákupů pro občany na Olomoucku:
           <td>
           </td>
           <td>
-            {$customer->billingStreet}
+            {$zamestnanec->billingStreet}
           </td>
         </tr>
         <tr>
@@ -56,7 +56,7 @@ Vyúčtování nákupů pro občany na Olomoucku:
 
           </td>
           <td>
-              {$customer->billingZip}  {$customer->billingCity}
+              {$zamestnanec->billingZip}  {$zamestnanec->billingCity}
           </td>
         </tr>
         <tr>
@@ -69,7 +69,7 @@ Vyúčtování nákupů pro občany na Olomoucku:
 
           </td>
           <td>
-            tel. {$customer->phone}
+            tel. {$zamestnanec->phone}
           </td>
         </tr>
       </table>
@@ -88,13 +88,13 @@ Vyúčtování nákupů pro občany na Olomoucku:
     </th>
   </tr>
   <tr><td><br></td></tr>
-{foreach $orders as $order}
+{foreach $wRs as $wR}
 <tr>
   <td>
-    Objednávka č. {$order->orderId} ze dne {$order->created|date:'%d. %m. %Y'}
+    Objednávka č. {$wR->pomerId} ze dne {$wR->created|date:'%d. %m. %Y'}
   </td>
   <td align="right">
-    {$order->price |number:2:',':' '} kč
+    {$wR->price |number:2:',':' '} kč
   </td>
 </tr>
 {/foreach}
