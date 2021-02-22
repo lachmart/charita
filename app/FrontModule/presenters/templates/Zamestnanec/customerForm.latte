@@ -71,8 +71,8 @@
 		</div>
 		<div class="row mb-5">
 			<div class="col-sm-5 offset-sm-7">
-			 {if $showInvoiceCreate}
-				 <a href="{link Invoice:Create $zamestnanec->zamestnanecId}" class="btn btn-primary" role="button" onclick='return confirm("Opravdu chcete vystavit fakturu?")'>Vystavit fakturu</a>
+			 {if $showMzdovyComCreate}
+				 <a href="{link MzdovyCom:Create $zamestnanec->zamestnanecId}" class="btn btn-primary" role="button" onclick='return confirm("Opravdu chcete vystavit fakturu?")'>Vystavit fakturu</a>
 			 {/if}
 			 {if isset($zamestnanec)}
 			 	 <a href="{link WR:Create $zamestnanec->zamestnanecId}" class="btn btn-primary" role="button">Přidat objednávku</a>

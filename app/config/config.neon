@@ -22,9 +22,9 @@ services:
 	- App\Model\Repository\PohledRepository
 	- App\Components\IWRControlFactory
 	- App\Forms\WRForm
-	- App\Model\Repository\InvoiceRepository
-	- App\Components\IInvoiceControlFactory
-	- App\Forms\InvoiceForm
+	- App\Model\Repository\MzdovyComRepository
+	- App\Components\IMzdovyComControlFactory
+	- App\Forms\MzdovyComForm
 	- App\Components\IRozpadstrediskaControlFactory
 	- App\Components\IPohledControlFactory
 	router: App\RouterFactory::createRouter

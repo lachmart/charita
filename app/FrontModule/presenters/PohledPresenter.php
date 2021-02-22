@@ -160,7 +160,7 @@ class PohledPresenter extends BasePresenter
       $pdf->WriteHTML($template);
       $pdf->Output("NES_objednavka_".$pomerId .".pdf", \Mpdf\Output\Destination::DOWNLOAD);
  //$pdf->Output();
-      $this->redirect('Invoice:');
+      $this->redirect('MzdovyCom:');
     }
 
 }

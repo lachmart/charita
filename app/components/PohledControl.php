@@ -53,8 +53,8 @@ class PohledControl extends Control
         $grid->setDataSource($this->pohledRepository->getAll());
 
         //$grid->addColumnText('billingFullName', 'jméno')->setSortable()->addAttributes(["width" => "15%"]);
-         $grid->addColumnLink('mzdovyComId', 'číslo mzdoveho listu', 'Invoice:detail','mzdovyComId',['mzdovyComId'=>'mzdovyComId'])->setSortable()->addAttributes(["width" => "10%"]);
-        // $grid->addColumnLink('created', 'vytvořeno', 'Invoice:detail','created',['mzdovyComId'=>'mzdovyComId'])->setSortable()->addAttributes(["width" => "25%"]);
+         $grid->addColumnLink('mzdovyComId', 'číslo mzdoveho listu', 'MzdovyCom:detail','mzdovyComId',['mzdovyComId'=>'mzdovyComId'])->setSortable()->addAttributes(["width" => "10%"]);
+        // $grid->addColumnLink('created', 'vytvořeno', 'MzdovyCom:detail','created',['mzdovyComId'=>'mzdovyComId'])->setSortable()->addAttributes(["width" => "25%"]);
         $grid->addColumnDateTime('mesic', 'měsíc')->setFormat('m/Y')->setSortable();
 
         $grid->addColumnLink('zamestnanecId', 'zaměstnanec','Zamestnanec:detail','zamestnanecId',['zamestnanecId'=>'zamestnanecId'])->setReplacement($this->zamestnanecRepository->getZamestnanecNames());
@@ -62,7 +62,7 @@ class PohledControl extends Control
         $grid->addColumnDateTime('nastup', 'nástup')->setFormat('d.m.Y')->setSortable();
         $grid->addColumnDateTime('vystup', 'výstup')->setSortable();
         $grid->addColumnText('primaPece', 'přímá péče')->setSortable();
-        $grid->addColumnLink('hrubaMzda', 'hrubá mzda','Invoice:detail','hrubaMzda',['mzdovyComId'=>'mzdovyComId'])->setSortable();
+        $grid->addColumnLink('hrubaMzda', 'hrubá mzda','MzdovyCom:detail','hrubaMzda',['mzdovyComId'=>'mzdovyComId'])->setSortable();
         $grid->addColumnText('stredisko', 'středisko')->setEditableCallback([$this, 'priceEdited'])->setSortable();
         $grid->addColumnLink('prepoctenyUvazek', 'přepočtený úvazek', 'WR:detail','prepoctenyUvazek',['pomerId'=>'pomerId'])->setSortable();
         $grid->addColumnText('stredisko2', '100')->setEditableCallback([$this, 'priceEdited'])->setSortable();
@@ -73,9 +73,9 @@ class PohledControl extends Control
         $grid->addColumnText('stredisko7', '210')->setEditableCallback([$this, 'priceEdited'])->setSortable();
 
         //  $grid->addColumnText('phone', 'telefon')->addAttributes(["width" => "25%"])->setFilterText();
-        //  $grid->addAction('link', 'Přidat nákup', 'Invoice:create')->addAttributes(["width" => "25%"]);
-         $grid->addAction('link2', 'Rozdělit podle klíče', 'Invoice:print');
-         $grid->addAction('link', 'uzamčít', 'Invoice:detail');
+        //  $grid->addAction('link', 'Přidat nákup', 'MzdovyCom:create')->addAttributes(["width" => "25%"]);
+         $grid->addAction('link2', 'Rozdělit podle klíče', 'MzdovyCom:print');
+         $grid->addAction('link', 'uzamčít', 'MzdovyCom:detail');
 
         $grid->setDefaultPerPage(50);
         $grid->setDefaultSort(['mzdovyComId' => 'DESC']);

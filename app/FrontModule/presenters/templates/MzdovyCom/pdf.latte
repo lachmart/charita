@@ -104,7 +104,7 @@ Vyúčtování nákupů pro občany na Olomoucku:
     Celková částka
   </td>
   <td align="right">
-    {$invoice->total |number:2:',':' '} kč
+    {$mzdovyCom->total |number:2:',':' '} kč
   </td>
 </tr>
 </table>
@@ -122,7 +122,7 @@ Vyúčtování nákupů pro občany na Olomoucku:
       <tr>
         <td>  částku:
         </td>
-        <td><b>{$invoice->total|number:2:',':' '} kč</b>
+        <td><b>{$mzdovyCom->total|number:2:',':' '} kč</b>
         </td>
       </tr>
       <tr>
@@ -153,7 +153,7 @@ Vyúčtování nákupů pro občany na Olomoucku:
   </tr>
   <tr>
     <td>dne:</td>
-    <td>{$invoice->created|date:'%d. %m. %Y'}</td>
+    <td>{$mzdovyCom->created|date:'%d. %m. %Y'}</td>
   </tr>
   <tr>
     <td>kontakt:</td>

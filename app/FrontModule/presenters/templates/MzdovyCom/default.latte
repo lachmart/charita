@@ -1,37 +1,25 @@
-{* Device:detail *}
+{* MzdovyCom:default *}
 
 {block content}
 
 
 <div id="banner" class="mb-4">
-	<h3 n:block=title>Detail mzdového listu</h3>
+	<h3 n:block=title>Přehled souhrnných mzdových listů</h3>
 </div>
-
-{include 'invoiceForm.latte'}
-
-<ul class="nav nav-tabs" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" href="#orders" role="tab" data-toggle="tab">Rozpad na střediska</a>
-  </li>
-</ul>
-
-<!-- Tab panes -->
-<div class="tab-content">
-	<div role="tabpanel" class="tab-pane in active" id="orders">
-	 {control rozpadstrediskaControl} 
-	</div>
-	</div>
-
-
+{control mzdovyComControl}
 {/block}
-
-{define modalTitle}
-	Vložení záznamu
-{/define}
-
-
-
 {block scripts}
+	<script>
+		$( "#typeFilter" ).change(function() {
+		    $.nette.ajax({
+		        type: "GET",
+		        url: {link mzdovyComControl-filterMzdovyComs!},
+		        data: { {$control->getParameterId('type')}: $(this).val()}
+
+		    });
+		});
+	</script>
+
 
 	<script>
 	  $.nette.ext("modals", {

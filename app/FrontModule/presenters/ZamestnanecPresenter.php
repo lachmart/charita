@@ -17,7 +17,7 @@ use App\Forms\IZamestnanecFormFactory;
 use App\Forms\ZamestnanecForm;
 use App\Components\IZamestnanecControlFactory;
 use App\Components\IWRControlFactory;
-use App\Components\IInvoiceControlFactory;
+use App\Components\IMzdovyComControlFactory;
 
 //define("ALL", -1);
 
@@ -36,10 +36,10 @@ class ZamestnanecPresenter extends BasePresenter
     public $zamestnanecControlFactory;
 
     /**
-     * @var IInvoiceControlFactory
+     * @var IMzdovyComControlFactory
      * @inject
      */
-    public $invoiceControlFactory;
+    public $mzdovyComControlFactory;
     /**
      * @var IWRControlFactory
      * @inject
@@ -78,7 +78,7 @@ class ZamestnanecPresenter extends BasePresenter
 
     function renderCreate($zamestnanecTypeId)
     {
-      $this->template->showInvoiceCreate = 0;
+      $this->template->showMzdovyComCreate = 0;
       $this->zamestnanecId = 0;
        // $this->template->zamestnanecAttributes = $this->zamestnanecRepository->getAllZamestnanecAttributesForZamestnanecType($zamestnanecTypeId);
         //$this->zamestnanecTypeId = $zamestnanecTypeId;
@@ -87,12 +87,12 @@ class ZamestnanecPresenter extends BasePresenter
 
     function renderDetail($zamestnanecId)
     {
-        $this->template->showInvoiceCreate = 0;
+        $this->template->showMzdovyComCreate = 0;
         $zamestnanec = $this->zamestnanecRepository->get($zamestnanecId);
         if($zamestnanec){
           $this->zamestnanecId = $zamestnanecId;
           $this->template->zamestnanec = $zamestnanec;
-          //$this->template->showInvoiceCreate = count($this->wRRepository->getWRsWithoutInvoice($zamestnanecId));
+          //$this->template->showMzdovyComCreate = count($this->wRRepository->getWRsWithoutMzdovyCom($zamestnanecId));
           $zamestnanecBasicAttributes = $zamestnanec->toArray();
           $this['zamestnanecForm']->setDefaults($zamestnanecBasicAttributes);
 
@@ -178,9 +178,9 @@ class ZamestnanecPresenter extends BasePresenter
     {
         return $this->wRControlFactory->create();
     }
-    public function createComponentInvoiceControl()
+    public function createComponentMzdovyComControl()
     {
-        return $this->invoiceControlFactory->create();
+        return $this->mzdovyComControlFactory->create();
     }
 
 

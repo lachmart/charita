@@ -18,7 +18,7 @@ use App\Forms\WRForm;
 use App\Components\IWRControlFactory;
 use Mpdf\Mpdf as mPDF;
 use Nette\Application\UI\ITemplateFactory;
-use App\Components\IInvoiceControlFactory;
+use App\Components\IMzdovyComControlFactory;
 
 
 //define("ALL", -1);
@@ -37,10 +37,10 @@ class WRPresenter extends BasePresenter
      */
     public $wRControlFactory;
     /**
-     * @var IInvoiceControlFactory
+     * @var IMzdovyComControlFactory
      * @inject
      */
-    public $invoiceControlFactory;
+    public $mzdovyComControlFactory;
     /** @var \IWRFormFactory */
     private $wRFormFactory;
 
@@ -154,9 +154,9 @@ class WRPresenter extends BasePresenter
     {
         return $this->wRControlFactory->create();
     }
-    public function createComponentInvoiceControl()
+    public function createComponentMzdovyComControl()
     {
-        return $this->invoiceControlFactory->create();
+        return $this->mzdovyComControlFactory->create();
     }
 
     public function actionPrint($pomerId)
@@ -171,7 +171,7 @@ class WRPresenter extends BasePresenter
       $pdf->WriteHTML($template);
       $pdf->Output("NES_objednavka_".$pomerId .".pdf", \Mpdf\Output\Destination::DOWNLOAD);
  //$pdf->Output();
-      $this->redirect('Invoice:');
+      $this->redirect('MzdovyCom:');
     }
 
 }

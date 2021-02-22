@@ -61,7 +61,7 @@ class WRForm
         $form->addText('zamestnanecId', 'Zaměstnanec')->setAttribute('readonly','readonly');
         $form->addText('zamestnanecName', 'Zaměstnanec jméno')->setAttribute('readonly','readonly');
         $form->addText('pracKalendar', 'pracKalendar');
-      //  $form->addText('fk_invoice', 'Faktura')->setAttribute('readonly','readonly');
+      //  $form->addText('fk_mzdovyCom', 'Faktura')->setAttribute('readonly','readonly');
         //$form->addText('zamestnanecName', 'Zaměstnanec')->setDisabled();//->setAttribute('readonly','readonly');
 
 

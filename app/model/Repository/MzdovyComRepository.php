@@ -3,7 +3,7 @@
 namespace App\Model\Repository;
 
 
-class InvoiceRepository extends Repository
+class MzdovyComRepository extends Repository
 {
 
     protected $table = "mzdovylistCom";
@@ -24,23 +24,23 @@ class InvoiceRepository extends Repository
     {
         return $this->db->table($this->table)->where("zamestnanecId",$zamestnanecId)->fetchAll();
     }
-    public function addInvoice($data)
+    public function addMzdovyCom($data)
     {
         return $this->db->table($this->table)->insert($data);
     }
-    public function getInvoice($mzdovyComId)
+    public function getMzdovyCom($mzdovyComId)
     {
         return $this->db->table($this->table)->get($mzdovyComId);
     }
-    public function deleteInvoice($mzdovyComId)
+    public function deleteMzdovyCom($mzdovyComId)
     {
-        $this->db->table('order')->where('fk_invoice', $mzdovyComId)->update(['fk_invoice'=>0]);
+        $this->db->table('order')->where('fk_mzdovyCom', $mzdovyComId)->update(['fk_mzdovyCom'=>0]);
         return $this->db->table($this->table)->where('mzdovyComId', $mzdovyComId)->delete();
     }
-    public function makeInvoice($zamestnanecId)
+    public function makeMzdovyCom($zamestnanecId)
     {
         $data["zamestnanecId"] = $zamestnanecId;
-        return $this->addInvoice($data);
+        return $this->addMzdovyCom($data);
       }
 
 

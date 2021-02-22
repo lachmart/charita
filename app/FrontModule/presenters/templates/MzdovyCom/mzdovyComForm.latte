@@ -1,0 +1,111 @@
+{block mzdovyComForm}
+
+	{form mzdovyComForm}
+
+		<!-- Jednoduché vykreslení chyb -->
+		<div  n:if="$form->hasErrors()">
+		    <div class="alert alert-danger" n:foreach="$form->errors as $error">{$error}</div>
+		</div>
+
+		<div class="card mb-4">
+		  <div class="card-header">
+			Údaje o souhrném mzdovém listu:
+			</div>
+			{* <div style="display:none;">
+				{label	zamestnanecId/}
+				{input	zamestnanecId}
+			</div> *}
+		  <div class="card-body">
+		  	<div class="row mb-4">
+					<div class="col-sm-6">
+                        {label zamestnanecName/}
+                        {input zamestnanecName}
+						</div>
+
+		  	</div>
+		  	<div class="row mb-4">
+					<div class="col-sm-6">
+                        {label mzdovyComId/}
+                        {input mzdovyComId}
+						</div>
+						<div class="col-sm-6">
+
+				  	</div>
+		  	</div>
+				<div class="row mb-4">
+					<div class="col-sm-6">
+                        {label periodId/}
+                        {input periodId}
+                    </div>
+                    <div class="col-sm-6">
+				  	</div>
+		  	</div>
+				<div class="row mb-4">
+					<div class="col-sm-6">
+											{label socialniPojistneZamestnavatel/}
+											{input socialniPojistneZamestnavatel}
+						</div>
+						<div class="col-sm-6">
+											{label zdravotniPojistneZamestnavatel/}
+											{input zdravotniPojistneZamestnavatel}
+
+				  	</div>
+		  	</div>
+				<div class="row mb-4">
+					<div class="col-sm-6">
+                        {label mzdoveNaklady/}
+                        {input mzdoveNaklady}
+                    </div>
+                    <div class="col-sm-6">
+                        {label	hrubaMzda/}
+	                    {input	hrubaMzda}
+				  	</div>
+		  	</div>
+				<div class="row mb-4">
+					<div class="col-sm-6">
+						</div>
+						<div class="col-sm-6">
+				  	</div>
+		  	</div>
+				<div class="row mb-4">
+					<div class="col-sm-6">
+						</div>
+						<div class="col-sm-6">
+				  	</div>
+		  	</div>
+				<div class="row mb-4">
+					<div class="col-sm-6">
+						</div>
+						<div class="col-sm-6">
+				  	</div>
+		  	</div>
+				<div class="row mb-4">
+					<div class="col-sm-6">
+						</div>
+						<div class="col-sm-6">
+				  	</div>
+		  	</div>
+				<div class="row mb-4">
+					<div class="col-sm-12">
+						</div>
+
+		  	</div>
+
+		</div>
+
+
+
+		<div class="row mb-5">
+			<div class="col-sm-3 offset-sm-8">
+
+				<a href="{link MzdovyCom:Print}" class="btn btn-primary" role="button">Uložit Pdf</a>
+				<a href="{link MzdovyCom:}" class="btn btn-secondary float-right" role="button">Zrušit</a>
+
+			</div>
+		</div>
+
+	{/form}
+
+
+
+{/block}

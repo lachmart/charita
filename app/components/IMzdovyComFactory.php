@@ -1,11 +1,11 @@
 <?php
 namespace App\Components;
 
-interface IInvoiceControlFactory
+interface IMzdovyComControlFactory
 {
 
     /**
-     * @return InvoiceControl
+     * @return MzdovyComControl
      */
     function create();
 

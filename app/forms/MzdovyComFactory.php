@@ -10,25 +10,25 @@ namespace App\Forms;
 use Nette;
 use Nette\Application\UI;
 use Nette\Forms\Controls;
-use App\Model\Repository\InvoiceRepository;
+use App\Model\Repository\MzdovyComRepository;
 use App\Model\Repository\WRRepository;
 
 
-class InvoiceForm
+class MzdovyComForm
 {
 
-    /** @var InvoiceRepository */
-    private $invoiceRepository;
+    /** @var MzdovyComRepository */
+    private $mzdovyComRepository;
     /** @var WRRepository */
     private $wRRepository;
 
 
 
 
-    public function __construct(InvoiceRepository $invoiceRepository,WRRepository $wRRepository)
+    public function __construct(MzdovyComRepository $mzdovyComRepository,WRRepository $wRRepository)
     {
         //parent::__construct();
-        $this->invoiceRepository = $invoiceRepository;
+        $this->mzdovyComRepository = $mzdovyComRepository;
         $this->wRRepository = $wRRepository;
     }
 
@@ -114,17 +114,17 @@ class InvoiceForm
 
       $data = $values;
     //  $data['id'] = 1;
-      $data['total']=$this->wRRepository->getTotalInvoice($mzdovyComId);
+      $data['total']=$this->wRRepository->getTotalMzdovyCom($mzdovyComId);
 
 
 
       if ($mzdovyComId) {
-          $invoice = $this->invoiceRepository->getInvoice($mzdovyComId);
-          $invoice->update($data);
+          $mzdovyCom = $this->mzdovyComRepository->getMzdovyCom($mzdovyComId);
+          $mzdovyCom->update($data);
       }
       else {
           $data['created']=date('Y-m-d H:i:s',time());
-          $mzdovyComId = $this->invoiceRepository->addInvoice($data);
+          $mzdovyComId = $this->mzdovyComRepository->addMzdovyCom($data);
           }
 
     }
@@ -132,13 +132,13 @@ class InvoiceForm
     private function delete($form, $values)
     {
       try{
-      $this->invoiceRepository->deleteInvoice($values->mzdovyComId);
+      $this->mzdovyComRepository->deleteMzdovyCom($values->mzdovyComId);
       }
       catch(Nette\Database\ForeignKeyConstraintViolationException $e){
         $form->addError('Fakturu není možné odstranit. Pravděpodobně má přiřazené objednávky.');
       }
-        //  $mzdovyComId = $this->invoiceRepository->addInvoice($data);
-         // $invoice = $this->invoiceRepository->getInvoice($mzdovyComId);
+        //  $mzdovyComId = $this->mzdovyComRepository->addMzdovyCom($data);
+         // $mzdovyCom = $this->mzdovyComRepository->getMzdovyCom($mzdovyComId);
           //$this->flashMessage('Bylo zaevidováno nové zařízení: '.$values->name, 'alert-success');
 
     }

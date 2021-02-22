@@ -20,9 +20,9 @@ class PohledRepository extends Repository
         return $this->db->table($this->table)->where("zamestnanecId",$zamestnanecId)->fetchAll();
       }
     }
-    // public function getAllInvoice($mzdovyComId)
+    // public function getAllMzdovyCom($mzdovyComId)
     // {
-    //   return $this->db->table($this->table)->where("fk_invoice",$mzdovyComId)->fetchAll();
+    //   return $this->db->table($this->table)->where("fk_mzdovyCom",$mzdovyComId)->fetchAll();
     // }
 
     public function addPohled($data)
@@ -67,25 +67,25 @@ class PohledRepository extends Repository
       return 0;
     }
     private function canUpdate($pohled){
-      if($pohled->fk_invoice)
+      if($pohled->fk_mzdovyCom)
         return false;
       return true;
     }
 
-    public function getTotalInvoice($mzdovyComId)
+    public function getTotalMzdovyCom($mzdovyComId)
     {
-      return $this->db->table($this->table)->where("fk_invoice",$mzdovyComId)->sum("price");
+      return $this->db->table($this->table)->where("fk_mzdovyCom",$mzdovyComId)->sum("price");
     }
-    public function getPohledsWithoutInvoice($zamestnanecId)
+    public function getPohledsWithoutMzdovyCom($zamestnanecId)
     {
-        return $this->db->table($this->table)->where("fk_invoice",0)->where("zamestnanecId",$zamestnanecId)->where("price >",0);
-    //  $this->db->table($this->table)->where("zamestnanecId",$zamestnanecId)->where("fk_invoice",0);
+        return $this->db->table($this->table)->where("fk_mzdovyCom",0)->where("zamestnanecId",$zamestnanecId)->where("price >",0);
+    //  $this->db->table($this->table)->where("zamestnanecId",$zamestnanecId)->where("fk_mzdovyCom",0);
     }
-    public function addInvoiceId($pomerId, $mzdovyComId)
+    public function addMzdovyComId($pomerId, $mzdovyComId)
     {
       $pohled = $this->getPohled($pomerId);
       $pohled->update([
-        'fk_invoice'=>$mzdovyComId,
+        'fk_mzdovyCom'=>$mzdovyComId,
       ]);
     }
     public function getAllRozpad($mzdovyComId)

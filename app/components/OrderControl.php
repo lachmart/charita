@@ -52,7 +52,7 @@ class WRControl extends Control
 
 
         if(isset($this->getPresenter()->mzdovyComId))
-          $grid->setDataSource($this->wRRepository->getAllInvoice($this->getPresenter()->mzdovyComId));
+          $grid->setDataSource($this->wRRepository->getAllMzdovyCom($this->getPresenter()->mzdovyComId));
         else {
           $grid->setDataSource($this->wRRepository->getAllZamestnanec($this->zamestnanecId));
         }
@@ -63,7 +63,7 @@ class WRControl extends Control
         $grid->addColumnLink('zamestnanecId', 'zaměstnanec','Zamestnanec:detail','zamestnanecId',['zamestnanecId'=>'zamestnanecId'])->setReplacement($this->zamestnanecRepository->getZamestnanecNames());
         $grid->addColumnLink('prepoctenyUvazek', 'přepočtený úvazek', 'WR:detail','prepoctenyUvazek',['pomerId'=>'pomerId'])->setSortable();
         $grid->addColumnText('stredisko', 'středisko')->setEditableCallback([$this, 'priceEdited'])->setSortable();
-        //$grid->addColumnLink('fk_invoice', 'vyfakturováno', 'Invoice:detail','fk_invoice',['mzdovyComId'=>'fk_invoice'])->addAttributes(["width" => "15%"])->setReplacement(['0'=>'ne'])->setSortable();
+        //$grid->addColumnLink('fk_mzdovyCom', 'vyfakturováno', 'MzdovyCom:detail','fk_mzdovyCom',['mzdovyComId'=>'fk_mzdovyCom'])->addAttributes(["width" => "15%"])->setReplacement(['0'=>'ne'])->setSortable();
         // $grid->addColumnText('billingZip', 'psč')->addAttributes(["width" => "25%"]);
         // $grid->addColumnText('email', 'email')->addAttributes(["width" => "25%"]);
         // $grid->addColumnText('phone', 'telefon')->addAttributes(["width" => "25%"]);
