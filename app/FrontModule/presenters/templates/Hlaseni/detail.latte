@@ -1,0 +1,46 @@
+{* Device:detail *}
+
+{block content}
+
+
+<div id="banner" class="mb-4">
+	<h3 n:block=title>Detail zaměstnance</h3>
+</div>
+
+{include 'hlaseniForm.latte'}
+
+
+{/block}
+
+{define modalTitle}
+	Vložení záznamu
+{/define}
+
+
+
+{block scripts}
+
+	<script>
+	  $.nette.ext("modals", {
+	          success: function(payload) {
+	              if (payload.redirect) {
+	                  $(".modal-ajax").modal("hide");
+	              } else if(payload.isModal) {
+	                  $('.modal-ajax').modal('show');
+	              }
+	          }
+	      });
+
+	  $.nette.ext("ajaxRedirect", {
+	      success: function (payload) {
+	          if (payload.redirect) {
+	              $.nette.ajax(payload.redirect);
+	          }
+	      }
+	  });
+	</script>
+
+
+
+
+{/block}

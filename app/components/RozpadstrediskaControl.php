@@ -52,7 +52,7 @@ class RozpadstrediskaControl extends Control
 
 
         if(isset($this->getPresenter()->mzdovyComId))
-          $grid->setDataSource($this->wRRepository->getAllRozpad($this->getPresenter()->mzdovyComId));
+          $grid->setDataSource($this->wRRepository->getAllRozpad($this->getPresenter()->mzdovylistComId));
         else {
           $grid->setDataSource($this->wRRepository->getAllZamestnanec($this->zamestnanecId));
         }

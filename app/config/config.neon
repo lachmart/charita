@@ -20,11 +20,17 @@ services:
 	- App\Forms\ZamestnanecForm
 	- App\Model\Repository\WRRepository
 	- App\Model\Repository\PohledRepository
+	- App\Model\Repository\HlaseniRepository
 	- App\Components\IWRControlFactory
+	- App\Components\IHlaseniControlFactory
 	- App\Forms\WRForm
 	- App\Model\Repository\MzdovyComRepository
 	- App\Components\IMzdovyComControlFactory
+	- App\Forms\HlaseniForm
 	- App\Forms\MzdovyComForm
+	- App\Model\Repository\MzdovyParRepository
+	- App\Components\IMzdovyParControlFactory
+	- App\Forms\MzdovyParForm
 	- App\Components\IRozpadstrediskaControlFactory
 	- App\Components\IPohledControlFactory
 	router: App\RouterFactory::createRouter

@@ -1,6 +1,6 @@
-{block mzdovyComForm}
+{block mzdovyParForm}
 
-	{form mzdovyComForm}
+	{form mzdovyParForm}
 
 		<!-- Jednoduché vykreslení chyb -->
 		<div  n:if="$form->hasErrors()">
@@ -9,7 +9,7 @@
 
 		<div class="card mb-4">
 		  <div class="card-header">
-			Údaje o souhrném mzdovém listu:
+			Údaje o částečném mzdovém listu:
 			</div>
 			{* <div style="display:none;">
 				{label	zamestnanecId/}
@@ -25,8 +25,8 @@
 		  	</div>
 		  	<div class="row mb-4">
 					<div class="col-sm-6">
-                        {label mzdovyComId/}
-                        {input mzdovyComId}
+                        {label mzdovyParId/}
+                        {input mzdovyParId}
 						</div>
 						<div class="col-sm-6">
 
@@ -98,8 +98,8 @@
 		<div class="row mb-5">
 			<div class="col-sm-3 offset-sm-8">
 
-				<a href="{link MzdovyCom:Print}" class="btn btn-primary" role="button">Uložit Pdf</a>
-				<a href="{link MzdovyCom:}" class="btn btn-secondary float-right" role="button">Zrušit</a>
+{*				<a href="{link MzdovyPar:Print}" class="btn btn-primary" role="button">Uložit Pdf</a>*}
+				<a href="{link MzdovyPar:}" class="btn btn-secondary float-right" role="button">Zrušit</a>
 
 			</div>
 		</div>

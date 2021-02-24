@@ -48,21 +48,21 @@ class PohledControl extends Control
     {
         $this->zamestnanecId =$this->getPresenter()->zamestnanecId;
         $grid = new DataGrid($this, $name);
-        $grid->setPrimaryKey('mzdovyComId');
+        $grid->setPrimaryKey('mzdovylistComId');
 
         $grid->setDataSource($this->pohledRepository->getAll());
 
         //$grid->addColumnText('billingFullName', 'jméno')->setSortable()->addAttributes(["width" => "15%"]);
-         $grid->addColumnLink('mzdovyComId', 'číslo mzdoveho listu', 'MzdovyCom:detail','mzdovyComId',['mzdovyComId'=>'mzdovyComId'])->setSortable()->addAttributes(["width" => "10%"]);
+         $grid->addColumnLink('mzdovylistComId', 'číslo mzdoveho listu', 'MzdovyCom:detail','mzdovylistComId',['mzdovylistComId'=>'mzdovylistComId'])->setSortable()->addAttributes(["width" => "10%"]);
         // $grid->addColumnLink('created', 'vytvořeno', 'MzdovyCom:detail','created',['mzdovyComId'=>'mzdovyComId'])->setSortable()->addAttributes(["width" => "25%"]);
-        $grid->addColumnDateTime('mesic', 'měsíc')->setFormat('m/Y')->setSortable();
+        $grid->addColumnText('periodId', 'měsíc');//->setFormat('m/Y')->setSortable();
 
         $grid->addColumnLink('zamestnanecId', 'zaměstnanec','Zamestnanec:detail','zamestnanecId',['zamestnanecId'=>'zamestnanecId'])->setReplacement($this->zamestnanecRepository->getZamestnanecNames());
-        $grid->addColumnLink('FK_pracovniPomer', 'p. poměr','WR:detail','FK_pracovniPomer',['pomerId'=>'FK_pracovniPomer']);
+        $grid->addColumnLink('pracovnipomerId', 'p. poměr','WR:detail','pracovnipomerId',['pomerId'=>'pracovnipomerId']);
         $grid->addColumnDateTime('nastup', 'nástup')->setFormat('d.m.Y')->setSortable();
         $grid->addColumnDateTime('vystup', 'výstup')->setSortable();
         $grid->addColumnText('primaPece', 'přímá péče')->setSortable();
-        $grid->addColumnLink('hrubaMzda', 'hrubá mzda','MzdovyCom:detail','hrubaMzda',['mzdovyComId'=>'mzdovyComId'])->setSortable();
+        $grid->addColumnLink('hrubaMzda', 'hrubá mzda','MzdovyCom:detail','hrubaMzda',['mzdovylistComId'=>'mzdovylistComId'])->setSortable();
         $grid->addColumnText('stredisko', 'středisko')->setEditableCallback([$this, 'priceEdited'])->setSortable();
         $grid->addColumnLink('prepoctenyUvazek', 'přepočtený úvazek', 'WR:detail','prepoctenyUvazek',['pomerId'=>'pomerId'])->setSortable();
         $grid->addColumnText('stredisko2', '100')->setEditableCallback([$this, 'priceEdited'])->setSortable();
@@ -78,7 +78,7 @@ class PohledControl extends Control
          $grid->addAction('link', 'uzamčít', 'MzdovyCom:detail');
 
         $grid->setDefaultPerPage(50);
-        $grid->setDefaultSort(['mzdovyComId' => 'DESC']);
+        $grid->setDefaultSort(['mzdovylistComId' => 'DESC']);
         $grid->setTranslator($this->translator);
         //$grid->addFilterMultiSelect('buildingName', 'buildingName', ['První budova', 'Druhá']);
         $grid->setStrictSessionFilterValues(FALSE);

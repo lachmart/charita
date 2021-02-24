@@ -144,12 +144,13 @@ class HomepagePresenter extends BasePresenter
     public function actionImportWLPartial()
     {
         $this->setView('default');
-        $wrs =$this->execCurl('wagelistpartials', ['where' => "period_id eq '1A10000101'", 'select'=> 'workingrelation_id, S_OverTimeTotal, id, employee_id, oldrewardperiodlength, oldtwelvemonthsreward, paidholidaytotal, wageperiod_id, grosswagetotal,totalworktime, oldrewardlongtermtotal, S_PaidFreeTotal, HolidayDrawHours, S_ArmyExerciseTotal, S_SickAbsences']);
+        $wrs =$this->execCurl('wagelistpartials', ['where' => "period_id eq '1A10000101'", 'select'=> 'wagelistcommon_id, workingrelation_id, S_OverTimeTotal, id, employee_id, oldrewardperiodlength, oldtwelvemonthsreward, paidholidaytotal, wageperiod_id, grosswagetotal,totalworktime, oldrewardlongtermtotal, S_PaidFreeTotal, HolidayDrawHours, S_ArmyExerciseTotal, S_SickAbsences']);
         foreach (json_decode($wrs) as $wr){
             $mzdovyList = [];
             $mzdovyList['mzdovyParId'] =  $wr->id;
             $mzdovyList['zamestnanecId'] =  $wr->employee_id;
             $mzdovyList['pracovnipomerId'] =  $wr->workingrelation_id;
+            $mzdovyList['mzdovylistComId'] =  $wr->wagelistcommon_id;
             $mzdovyList['periodId'] =  $wr->wageperiod_id;
             $mzdovyList['hrubaMzda'] =  $wr->grosswagetotal;
 

@@ -10,7 +10,7 @@ class PohledRepository extends Repository
 
     public function getAll()
     {
-        return $this->db->fetchAll("Select * from mzdovylist INNER JOIN pracovnipomer ON mzdovylist.FK_pracovniPomer=pracovnipomer.pomerId LEFT JOIN rozpadnastredisko ON mzdovylist.mzdovyComId=rozpadnastredisko.FK_MzdovyList AND rozpadnastredisko.verze = 0");
+        return $this->db->fetchAll("Select * from mzdovylistPar INNER JOIN pracovnipomer ON mzdovylistPar.pracovniPomerId=pracovnipomer.pomerId LEFT JOIN rozpadnastredisko ON mzdovylistPar.mzdovylistComId=rozpadnastredisko.FK_MzdovyList AND rozpadnastredisko.verze = 0");
     }
     public function getAllZamestnanec($zamestnanecId)
     {

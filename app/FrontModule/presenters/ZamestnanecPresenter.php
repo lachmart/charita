@@ -7,6 +7,7 @@
 
 namespace FrontModule;
 
+use App\Components\IHlaseniControlFactory;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Forms\Controls;
@@ -45,6 +46,11 @@ class ZamestnanecPresenter extends BasePresenter
      * @inject
      */
     public $wRControlFactory;
+    /**
+     * @var IHlaseniControlFactory
+     * @inject
+     */
+    public $hlaseniControlFactory;
 
     /** @var \IZamestnanecFormFactory */
     private $zamestnanecFormFactory;
@@ -91,6 +97,7 @@ class ZamestnanecPresenter extends BasePresenter
         $zamestnanec = $this->zamestnanecRepository->get($zamestnanecId);
         if($zamestnanec){
           $this->zamestnanecId = $zamestnanecId;
+          $this->template->zamestnanecId = $zamestnanecId;
           $this->template->zamestnanec = $zamestnanec;
           //$this->template->showMzdovyComCreate = count($this->wRRepository->getWRsWithoutMzdovyCom($zamestnanecId));
           $zamestnanecBasicAttributes = $zamestnanec->toArray();
@@ -181,6 +188,10 @@ class ZamestnanecPresenter extends BasePresenter
     public function createComponentMzdovyComControl()
     {
         return $this->mzdovyComControlFactory->create();
+    }
+    public function createComponentHlaseniControl()
+    {
+        return $this->hlaseniControlFactory->create();
     }
 
 

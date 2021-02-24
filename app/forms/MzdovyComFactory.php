@@ -43,11 +43,11 @@ class MzdovyComForm
         $form->getElementPrototype()->class('ajax');
 
         $form->addGroup('');
-        $form->addText('mzdovyComId', 'Id')->setAttribute('readonly','readonly');
+        $form->addText('mzdovyComId', 'Id')->setDefaultValue($mzdovyComId)->setAttribute('readonly','readonly');
         $form->addText('zamestnanecName', 'Jméno zaměstnance')->setAttribute('readonly','readonly');
         $form->addText('periodId', 'měsíc')->setAttribute('readonly','readonly');
         $form->addText('FK_pracovniPomer', 'p. poměr')->setAttribute('readonly','readonly');
-        $form->addText('hrubaMzda', 'hrubá mzda')->setDefaultValue($mzdovyComId)->setAttribute('readonly','readonly');
+        $form->addText('hrubaMzda', 'hrubá mzda')->setAttribute('readonly','readonly');
         $form->addText('socialniPojistneZamestnavatel', 'sp z-tel')->setDisabled();
         $form->addText('zdravotniPojistneZamestnavatel', 'zp z-tel')->setDisabled();
         $form->addText('mzdoveNaklady', 'mzdové náklady')->setDisabled();

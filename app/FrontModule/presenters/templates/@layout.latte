@@ -62,11 +62,14 @@
 							<li n:class="$presenter->isLinkCurrent('MzdovyCom:*') ? active">
 						<a href="{link MzdovyCom:}">Mzdové listy souhrnné</a>
 				</li>
+                <li n:class="$presenter->isLinkCurrent('MzdovyPar:*') ? active">
+						<a href="{link MzdovyPar:}">Mzdové listy částečné</a>
+				</li>
 							<li n:class="$presenter->isLinkCurrent('Pohled:default') ? active">
 						<a href="{link Pohled:default}">Pohled 1</a>
 				</li>
 							<li n:class="$presenter->isLinkCurrent('Pohled:hlaseni') ? active">
-						<a href="{link Pohled:hlaseni}">Hlášení</a>
+						<a href="{link Hlaseni:default}">Hlášení</a>
 				</li>
 
 		{* 	            <li>

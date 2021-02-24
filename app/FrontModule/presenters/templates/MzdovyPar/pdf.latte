@@ -1,0 +1,162 @@
+<h1><span style="font-weight:normal">FAKTURA</span> {$variabSymbol}</h1>
+Vyúčtování nákupů pro občany na Olomoucku:
+
+
+<hr>
+<br>
+<br>
+
+      <table id="udaje_charity" style="width:100%" >
+        <tr border="1">
+          <td colspan="2" >
+          <u>  Dodavatel: </u>
+          </td>
+          <td>
+
+          </td>
+          <td>
+          <u>   Zaměstnanec:</u>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Charita Olomouc
+          </td>
+          <td>
+
+          </td>
+          <td>
+
+          </td>
+          <td >
+            {$zamestnanec->billingFullName}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Wurmova 5; 77900
+          </td>
+          <td>
+
+          </td>
+          <td>
+          </td>
+          <td>
+            {$zamestnanec->billingStreet}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Ič: 44936427
+          </td>
+          <td>
+
+          </td>
+          <td>
+
+          </td>
+          <td>
+              {$zamestnanec->billingZip}  {$zamestnanec->billingCity}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Č. účtu:  123-1468770267/0100
+          </td>
+          <td>
+          </td>
+          <td>
+
+          </td>
+          <td>
+            tel. {$zamestnanec->phone}
+          </td>
+        </tr>
+      </table>
+
+
+<br>
+<hr>
+<br>
+<br>
+<table id="objednavky" style="width:100%;" >
+  <tr>
+    <td>
+      <u>Položky:</u>
+    </td>
+    <th>
+    </th>
+  </tr>
+  <tr><td><br></td></tr>
+{foreach $wRs as $wR}
+<tr>
+  <td>
+    Objednávka č. {$wR->pomerId} ze dne {$wR->created|date:'%d. %m. %Y'}
+  </td>
+  <td align="right">
+    {$wR->price |number:2:',':' '} kč
+  </td>
+</tr>
+{/foreach}
+<tr><td><br></td></tr>
+<tr>
+  <td>
+    Celková částka
+  </td>
+  <td align="right">
+    {$mzdovyPar->total |number:2:',':' '} kč
+  </td>
+</tr>
+</table>
+<br>
+<hr>
+<br>
+<br>
+
+
+<table id="objednavky" style="width:100%;" border="1" >
+  <tr>
+    <td >
+      <b>ÚDAJE PRO PLATBU</b><br>
+      <table>
+      <tr>
+        <td>  částku:
+        </td>
+        <td><b>{$mzdovyPar->total|number:2:',':' '} kč</b>
+        </td>
+      </tr>
+      <tr>
+        <td>  uhraďte převodem na účet: </td>
+        <td><b> 123-1468770267/0100 </b> </td>
+      </tr>
+      <tr>
+        <td>  variabilní symbol (VS): </td>
+        <td> <b>{$variabSymbol}</b> </td>
+      </tr>
+      <tr>
+        <td>  datum splatnosti: </td>
+        <td><b> {$dateToPay} </b> </td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+<i>Uhraďte  prosím přesnou částku a použijte uvedený variabilní symbol, usnadníte nám dohledání platby. Děkujeme.<i>
+<br>
+<br><br>
+<br><br>
+<br>
+<table>
+  <tr>
+    <td>Vystavila:</td>
+    <td> Eva Šanovcová</td>
+  </tr>
+  <tr>
+    <td>dne:</td>
+    <td>{$mzdovyPar->created|date:'%d. %m. %Y'}</td>
+  </tr>
+  <tr>
+    <td>kontakt:</td>
+    <td>Lucie Mokrá, tel. 739 246 033</td>
+  </tr>
+</table>

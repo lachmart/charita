@@ -20,17 +20,25 @@ abstract class Repository
     {
         return $this->db->table($this->table)->fetchAll();
     }
+    public function getAllZamestnanec($zamestnanecId)
+    {
+        if(!$zamestnanecId)
+            return $this->getAll();
+        else {
+            return $this->db->table($this->table)->where("zamestnanecId",$zamestnanecId)->fetchAll();
+        }
+    }
     public function add($data)
     {
         return $this->db->table($this->table)->insert($data);
     }
-    public function get($zamestnanecId)
+    public function get($hlaseniId)
     {
-        return $this->db->table($this->table)->get($zamestnanecId);
+        return $this->db->table($this->table)->get($hlaseniId);
     }
-    public function delete($zamestnanecId)
+    public function delete($hlaseniId)
     {
-        return $this->db->table($this->table)->get($zamestnanecId)->delete();
+        return $this->db->table($this->table)->get($hlaseniId)->delete();
     }
 
     /**

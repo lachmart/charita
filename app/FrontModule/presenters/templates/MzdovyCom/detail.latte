@@ -10,18 +10,23 @@
 {include 'mzdovyComForm.latte'}
 
 <ul class="nav nav-tabs" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" href="#orders" role="tab" data-toggle="tab">Rozpad na střediska</a>
-  </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="#orders" role="tab" data-toggle="tab">Rozpad na střediska</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#mzdovyComs" role="tab" data-toggle="tab">Mzdové listy částečné</a>
+    </li>
+
 </ul>
 
 <!-- Tab panes -->
 <div class="tab-content">
-	<div role="tabpanel" class="tab-pane in active" id="orders">
-	 {control rozpadstrediskaControl} 
-	</div>
-	</div>
-
+    <div role="tabpanel" class="tab-pane in active" id="orders">
+        {control rozpadstrediskaControl}
+    </div>
+    <div role="tabpanel" class="tab-pane in" id="mzdovyComs">
+        {control mzdovyParControl}
+    </div>
 
 {/block}
 

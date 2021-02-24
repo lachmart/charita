@@ -7,6 +7,7 @@
 
 namespace FrontModule;
 
+use App\Components\IMzdovyParControlFactory;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Forms\Controls;
@@ -49,6 +50,11 @@ class MzdovyComPresenter extends BasePresenter
      * @inject
      */
     public $wRControlFactory;
+    /**
+     * @var IMzdovyParControlFactory
+     * @inject
+     */
+    public $mzdovyParControlFactory;
 
     /** @var ITemplateFactory @inject */
     public $templateFactory;
@@ -123,6 +129,7 @@ class MzdovyComPresenter extends BasePresenter
         if($mzdovyCom){
           $mzdovyComBasicAttributes = $mzdovyCom->toArray();
           $mzdovyComBasicAttributes["zamestnanecName"] = $this->zamestnanecRepository->getName($mzdovyCom->zamestnanecId);
+          $this->zamestnanecId = $mzdovyCom->zamestnanecId;
           //$mzdovyComBasicAttributes["zamestnanecName"] = $mzdovyCom->zamestnanec->billingFullName;
 
           $this['mzdovyComForm']->setDefaults($mzdovyComBasicAttributes);
@@ -178,9 +185,6 @@ class MzdovyComPresenter extends BasePresenter
 
     }
 
-
-
-
     public function createComponentMzdovyComControl()
     {
         return $this->mzdovyComControlFactory->create();
@@ -188,6 +192,10 @@ class MzdovyComPresenter extends BasePresenter
     public function createComponentRozpadstrediskaControl()
     {
         return $this->rozpadstrediskaControlFactory->create();
+    }
+    public function createComponentMzdovyParControl()
+    {
+        return $this->mzdovyParControlFactory->create();
     }
 
     public function actionPrint($mzdovyComId)

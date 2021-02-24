@@ -1,0 +1,137 @@
+{block hlaseniForm}
+
+	{form hlaseniForm}
+
+		<!-- Jednoduché vykreslení chyb -->
+		<div  n:if="$form->hasErrors()">
+		    <div class="alert alert-danger" n:foreach="$form->errors as $error">{$error}</div>
+		</div>
+{*
+		<div class="card mb-4">
+		  <div class="card-header">
+			Údaje o zaměstnaneci:
+			</div>
+			<div style="display:none">
+				{label hlaseniId/}
+			    {input hlaseniId}
+			</div>
+		  <div class="card-body">
+		  	<div class="row mb-4">
+                    <div class="col-sm-6">
+                        {label	jmeno/}
+                        {input	jmeno}
+                    </div>
+                    <div class="col-sm-6">
+                        {label osobniCislo/}
+                        {input osobniCislo}
+				  	</div>
+		  	</div>
+				<div class="row mb-4">
+					<div class="col-sm-6">
+                        {label zapoctenaPraxe/}
+                        {input zapoctenaPraxe}
+                    </div>
+                    <div class="col-sm-6">
+                        {label	nastup/}
+                        {input	nastup}
+				  	</div>
+		  	</div>
+		</div>*}
+            <div class="card mb-4">
+		  <div class="card-header">
+			Hlášení:
+			</div>
+			<div style="display:none">
+                {label zamestnanecId/}
+			    {input zamestnanecId}
+			</div>
+		  <div class="card-body">
+		  	<div class="row mb-4">
+                    <div class="col-sm-6">
+                        {label	typPomeru/}
+                        {input	typPomeru}
+                    </div>
+                    <div class="col-sm-6">
+                        {label velikostPomeru/}
+                        {input velikostPomeru}
+				  	</div>
+		  	</div>
+				<div class="row mb-4">
+					<div class="col-sm-6">
+                        {label typPozice/}
+                        {input typPozice}
+                    </div>
+                    <div class="col-sm-6">
+                        {label	typUdalosti/}
+                        {input	typUdalosti}
+				  	</div>
+		  	</div>
+              <div class="row mb-4">
+					<div class="col-sm-12">
+                        {label it	/}
+                        {input it	}
+                    </div>
+		  	</div>
+              <div class="row mb-4">
+					<div class="col-sm-12">
+                        {label vizitky/}
+                        {input vizitky}
+                    </div>					<div class="col-sm-12">
+                        {label BOZP/}
+                        {input BOZP}
+                    </div><div class="col-sm-12">
+                        {label PO/}
+                        {input PO}
+                    </div><div class="col-sm-12">
+                        {label ridici/}
+                        {input ridici}
+                    </div>					<div class="col-sm-12">
+                        {label univerzalniKlic/}
+                        {input univerzalniKlic}
+                    </div>					<div class="col-sm-12">
+                        {label poznamka/}
+                        {input poznamka}
+                    </div>					<div class="col-sm-4">
+                        {label datum/}
+                        {input datum}
+                    </div>
+		  	</div>
+              <div class="row mb-4">
+              <div class="col-sm-4">
+                  {label submit/}
+                        {input submit}
+              </div>
+              </div>
+		</div>
+
+
+
+		{* <div class="row mb-5">
+			<div class="col-sm-7 offset-sm-5">
+                {label submit/}
+                {input submit}
+								{if $presenter->isLinkCurrent("detail")}
+									{label delete/}
+		              {input delete}
+								{/if}
+				<a href="{link Hlaseni:}" class="btn btn-secondary" role="button">Zrušit</a>
+			</div>
+		</div>
+		<div class="row mb-5">
+			<div class="col-sm-5 offset-sm-7">
+			 {if $showMzdovyComCreate}
+				 <a href="{link MzdovyCom:Create $hlaseni->hlaseniId}" class="btn btn-primary" role="button" onclick='return confirm("Opravdu chcete vystavit fakturu?")'>Vystavit fakturu</a>
+			 {/if}
+			 {if isset($hlaseni)}
+			 	 <a href="{link WR:Create $hlaseni->hlaseniId}" class="btn btn-primary" role="button">Přidat objednávku</a>
+			 {/if}
+
+
+			</div>
+		</div> *}
+
+	{/form}
+
+
+
+{/block}
