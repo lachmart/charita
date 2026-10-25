@@ -4,3 +4,7 @@ composer.lock
 temp
 vendor
 log
+# local secrets and data, never commit
+config.local.neon
+*.sql
+.htpasswd
